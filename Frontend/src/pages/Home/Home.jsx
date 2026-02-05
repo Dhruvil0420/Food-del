@@ -2,7 +2,7 @@ import {useState} from 'react'
 import './Home.css'
 import Header from '../../components/Header/Header.jsx';
 import Exploremenu from '../../components/Exploremenu/Exploremenu.jsx';
-import FoodDisplay from '../../components/Fooddisplay/Fooddisplay.jsx';
+import FoodDisplay from '../../components/FoodDisplay/FoodDisplay.jsx'
 import AppDownload from '../../components/AppDownload/AppDownload.jsx';
 
 function Home() {
