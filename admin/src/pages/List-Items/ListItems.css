@@ -1,0 +1,64 @@
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* header row */
+.list-table thead tr {
+  background-color: #f9f9f9;
+}
+
+/* all rows */
+.list-table tr {
+  border: 1px solid #cacaca;
+}
+
+/* header cells */
+.list-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+}
+
+/* body cells */
+.list-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+/* image */
+.list-table img {
+  width: 50px;
+  height: auto;
+}
+
+/* action cursor */
+.cursor {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* hover effect (optional but looks good) */
+.list-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+@media (max-width:570px) {
+  .thead-name{
+    display: none;
+  }
+  
+  .tbody-name{
+    display: none;
+  }
+}
+
+@media (max-width:450px) {
+  .thead-category {
+    display: none;
+  }
+  .tbody-category{
+    display: none;
+  }
+}

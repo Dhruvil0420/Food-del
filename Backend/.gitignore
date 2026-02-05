@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Environment variables (CRITICAL — never commit)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+
+# Coverage reports
+coverage/
+
+# Mongo dumps (if any)
+dump/
