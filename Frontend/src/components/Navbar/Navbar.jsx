@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets';
-import './NavBar.css'
+import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../context/AppContext';
 
