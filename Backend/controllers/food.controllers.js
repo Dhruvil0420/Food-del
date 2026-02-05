@@ -1,11 +1,13 @@
 import foodModel from '../models/food.models.js'
-import fs from 'fs'
+import {v2 as cloudinary } from "cloudinary";
+
 
 // add food item 
 
 const addFood = async (req, res) => {
     try {
         const { name, description, price, category } = req.body;
+        const imageFile = req.file;
 
         if (!name || !description || !price || !category) {
             return res.status(400).json({
@@ -14,21 +16,23 @@ const addFood = async (req, res) => {
             });
         }
 
-        if (!req.file) {
+        if (!imageFile) {
             return res.status(400).json({
                 success: false,
                 message: "Image is required"
             });
         }
 
-        console.log(req.file.filename);
+        const imageUpload = await cloudinary.uploader.upload(
+            `data:${imageFile.mimetype};base64,${imageFile.buffer.toString("base64")}`
+        );
 
         const food = new foodModel({
             name,
             description,
             price: price,
             category,
-            image: `${req.file.filename}`
+            image: imageUpload.secure_url
         });
 
         await food.save();
@@ -86,7 +90,10 @@ const removeFood = async (req, res) => {
             })
         }
 
-        fs.unlink(`uploads/${fooditem.image}`, () => { })
+        const url = fooditem.image;
+        const publicId = url.split("/").pop().split(".")[0];
+
+        await cloudinary.uploader.destroy(publicId);
 
         await foodModel.findByIdAndDelete(req.body.id);
 

@@ -7,13 +7,11 @@ function FoodItem({ item }) {
 
    
     const { cartItem, addToCart, removeToCart } = useContext(AppContext);
-
-    const url = import.meta.env.VITE_BACKEND_URL;
-
+    
     return (
         <div className='food-item'>
             <div className="food-item-container">
-                <img className='food-item-container-image' src={`${url}/images/`+ item.image} alt="" />
+                <img className='food-item-container-image' src={ item.image} alt="" />
                 {!cartItem[item._id]
                     ? <img className="add" onClick={() => addToCart(item._id)} src={assets.add_icon_white} alt="" />
                     : <div className='food-item-counter'>
