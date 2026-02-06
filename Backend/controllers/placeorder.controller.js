@@ -1,5 +1,6 @@
 import orderModel from "../models/order.models.js"
 import foodModel from '../models/food.models.js'
+import userModel from "../models/user.models.js"
 import Stripe from "stripe";
 
 // placeOrder using Forntend
@@ -14,7 +15,7 @@ const placeOrder = async (req, res) => {
         const userId = req.userId;
 
         if (!items?.length) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Plese Select Items"
             });
@@ -29,7 +30,12 @@ const placeOrder = async (req, res) => {
 
             const food = await foodModel.findById(item.foodId);
 
-            if (!food) throw Error("Invalid item");
+            if (!food) {
+                return res.json({
+                    success: false,
+                    message: "Selected Food is Not Found"
+                })
+            }
 
             totalAmount += food.price * item.quantity;
 
@@ -80,9 +86,9 @@ const verifyOrder = async (req, res) => {
                 message: "Paid"
             });
         }
-        else{
-            await orderModel.findByIdAndUpdate(orderId);
-            res.status(200).json({
+        else {
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({
                 success: true,
                 message: "Payment Failed"
             })
@@ -96,4 +102,24 @@ const verifyOrder = async (req, res) => {
     }
 }
 
-export { placeOrder, verifyOrder }
+const userOrders = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const orders = await orderModel.find({ userId }).populate("userId", "name email").populate({
+            path:"items.foodId",
+            select: "name price image category"
+        }).exec()
+        res.json({
+            success: true,
+            data: orders
+        });
+    }
+    catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+export { placeOrder, verifyOrder, userOrders }

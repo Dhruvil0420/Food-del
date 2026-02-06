@@ -1,18 +1,44 @@
-import {  useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './Verify.css'
-function Verify (){
+import axios from 'axios';
+import { useEffect } from 'react';
+import { toast }  from "react-toastify"
 
-    const [searchParams,setsearchParams] = useSearchParams();
+function Verify() {
 
-    const success = searchParams.get("success");
-    const orderId = searchParams.get("orderId");  
-    const url = process.env.FRONTEND_URL;
+  const [searchParams, setsearchParams] = useSearchParams();
 
-    console.log(success,orderId);
+  const success = searchParams.get("success");
+  const orderId = searchParams.get("orderId");
+  const url = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
+  const verifyPayment = async () => {
+    try {
+      const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/myorders");
+      }
+      else {
+        toast.error(response.data.message);
+        navigate("/");
+      }
+    } 
+    catch (error) {
+      toast.error(error.message)
+    }
+  }
+  console.log(success, orderId);
+
+  useEffect(() => {
+    verifyPayment()
+  },[])
   return (
     <div className='verify'>
-        <div className="spinner"></div>
+      <div className="spinner">
+
+      </div>
     </div>
   )
 }

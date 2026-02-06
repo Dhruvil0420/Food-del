@@ -6,8 +6,9 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import Cart from './pages/Cart/Cart.jsx'
 import Footer from './components/Footer/Footer.jsx';
 import Loginpopup from './components/Loginpopup/Loginpopup.jsx';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Verify from './pages/Verify/Verify.jsx';
+import MyOrders from './pages/MyOrders/MyOrders.jsx';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {ShowLogin ? <Loginpopup setShowLogin={setShowLogin} /> : <></>}
       <div className='app'>
         <Navbar setShowLogin={setShowLogin} />
@@ -24,10 +25,11 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/order' element={<PlaceOrder />} />
-          <Route path='/verify' element={<Verify/>} />
+          <Route path='/verify' element={<Verify />} />
+          <Route path='/myorders' element={<MyOrders />} />
         </Routes>
       </div>
-        <Footer />
+      <Footer />
     </>
   )
 }

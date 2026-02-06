@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const orderSchema = mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
@@ -8,6 +8,7 @@ const orderSchema = mongoose.Schema({
     },
     items: [
         {
+            _id: false,
             foodId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "food",

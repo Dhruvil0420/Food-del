@@ -137,7 +137,7 @@ const AppContextProvider = (props) => {
         removeToCart,
         getTotalPrice,
         DeliveryFee, setDeliveryFee,
-        token, setToken
+        token, setToken,
     }
     return (
         <AppContext.Provider value={contextValue}>
