@@ -43,7 +43,7 @@ const placeOrder = async (req, res) => {
                 price_data: {
                     currency: "inr",
                     product_data: { name: food.name },
-                    unit_amount: food.price * 100 * 80
+                    unit_amount: (food.price + 2) * 100 * 80
                 },
                 quantity: item.quantity
             });
@@ -72,9 +72,10 @@ const placeOrder = async (req, res) => {
             success: false,
             message: error.message
         })
-        console.log(error.message)
     }
 }
+
+// verifyUser Order 
 
 const verifyOrder = async (req, res) => {
     const { orderId, success } = req.body
@@ -102,11 +103,13 @@ const verifyOrder = async (req, res) => {
     }
 }
 
+// Get User orders
+
 const userOrders = async (req, res) => {
     try {
         const userId = req.userId;
         const orders = await orderModel.find({ userId }).populate("userId", "name email").populate({
-            path:"items.foodId",
+            path: "items.foodId",
             select: "name price image category"
         }).exec()
         res.json({
@@ -122,4 +125,69 @@ const userOrders = async (req, res) => {
     }
 }
 
-export { placeOrder, verifyOrder, userOrders }
+// List All Users Orders
+
+const listOrder = async (req, res) => {
+
+    try {
+        const orders = await orderModel.find({}).populate("userId", "name email").populate(
+            {
+                path: "items.foodId",
+                select: "name price category image "
+            }).exec();
+        res.json({
+            success: true,
+            data: orders
+        })
+    }
+    catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+// api for Update Order status
+
+const updateStatus = async (req, res) => {
+    try {
+        const { status, orderId } = req.body;
+        if(!status || !orderId){
+            return res.status(400).json({
+                success:false,
+                message:"Missing fields"
+            });
+        }
+        const allowed = ["Food Processing","Out Of Delivery","Delivery","Cancelled"];
+
+        if(!allowed.includes(status)){
+            res.status(400).json({
+                success: false,
+                message: "Invaild status"
+            })
+        }
+
+        const update = await orderModel.findByIdAndUpdate(orderId, { status: status });
+
+        if(!update){
+            res.status(404).json({
+                success: false,
+                message: "Order Not found"
+            })
+        }
+        
+        res.json({
+            success: true,
+            message: "Status Update"
+        })
+    }
+    catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
+
+}
+export { placeOrder, verifyOrder, userOrders, listOrder ,updateStatus}

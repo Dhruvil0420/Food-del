@@ -1,13 +1,18 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import './PlaceOrder.css'
 import { AppContext } from '../../context/AppContext';
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function PlaceOrder() {
 
-  const { getTotalPrice, DeliveryFee, food_list, cartItem, token } = useContext(AppContext);
+  const { getTotalPrice, food_list, cartItem, token } = useContext(AppContext);
+
+  const subtotal = getTotalPrice();
+  const deliveryFee = subtotal > 0 ? 2 : 0;
+  const total = deliveryFee + subtotal;
 
   const [data, setData] = useState({
     firstname: "",
@@ -21,6 +26,8 @@ function PlaceOrder() {
     phone: ""
   });
 
+  const navigate = useNavigate();
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const onChangeHandler = (event) => {
@@ -30,46 +37,45 @@ function PlaceOrder() {
   }
 
   const placedorder = async (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const order_items = [];
-
-  food_list.map((food) => {
-
-    const quantity = cartItem[food._id];
-
-    if (quantity && quantity > 0) {
-      order_items.push({
+    const order_items = food_list
+    .filter(food => cartItem[food._id] > 0)
+    .map(food => ({
         foodId: food._id,
-        quantity: quantity
-      });
-    }
-  });
+        quantity: cartItem[food._id]
+    }));
 
-  try {
 
-    const response = await axios.post(
-      `${backendUrl}/api/order/place`,
-      {
-        items: order_items,
-        address: data
-      },
-      {
-        headers: { token }
+    try {
+
+      const response = await axios.post(
+        `${backendUrl}/api/order/place`,
+        {
+          items: order_items,
+          address: data
+        },
+        {
+          headers: { token }
+        }
+      );
+
+      if (response.data.success) {
+        window.location.replace(response.data.session_url);
+      } else {
+        toast.error("Order rejected by server");
       }
-    );
 
-    if (response.data.success) {
-      window.location.replace(response.data.session_url);
-    } else {
-      toast.error("Order rejected by server");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Order failed");
     }
+  };
 
-  } catch (err) {
-    toast.error(err.response?.data?.message || "Order failed");
-  }
-};
-
+  useEffect(() => {
+    if (!token || subtotal === 0) {
+      navigate("/cart");
+    }
+  }, [token,subtotal])
 
   return (
     <form onSubmit={placedorder} className='place-order'>
@@ -175,19 +181,19 @@ function PlaceOrder() {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalPrice()}</p>
+              <p>${subtotal}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${DeliveryFee}</p>
+              <p>${deliveryFee}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalPrice() + DeliveryFee}</b>
+              <b>${total}</b>
             </div>
           </div>
           <button type='submit' >Proceed to Payment</button>

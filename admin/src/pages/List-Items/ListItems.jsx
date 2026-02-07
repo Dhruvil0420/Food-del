@@ -67,7 +67,7 @@ function ListItems() {
                     {list.map((item, index) => (
                         <tr key={item._id} className='list-table-format'>
                             <td className=''>
-                                <img src={item.image ? `${url}/images/${item.image}` : "/placeholder.png"} alt={item.name} />
+                                <img src={item.image ? item.image : "/placeholder.png"} alt={item.name} />
                             </td>
                             <td className='tbody-name'>{item.name}</td>
                             <td className='tbody-category'>{item.category}</td>

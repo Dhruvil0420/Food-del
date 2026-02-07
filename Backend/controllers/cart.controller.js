@@ -18,7 +18,6 @@ const addTocart = async (req, res) => {
         }
 
         let cartData = user.cartData;
-
         if (!cartData[itemId]) {
             cartData[itemId] = 1
         }

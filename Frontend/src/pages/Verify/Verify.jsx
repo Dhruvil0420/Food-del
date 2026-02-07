@@ -3,6 +3,8 @@ import './Verify.css'
 import axios from 'axios';
 import { useEffect } from 'react';
 import { toast }  from "react-toastify"
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 function Verify() {
 
@@ -12,12 +14,14 @@ function Verify() {
   const orderId = searchParams.get("orderId");
   const url = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
+  const {setCartItem} = useContext(AppContext);
 
   const verifyPayment = async () => {
     try {
       const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
       if (response.data.success) {
         toast.success(response.data.message);
+        setCartItem({});
         navigate("/myorders");
       }
       else {

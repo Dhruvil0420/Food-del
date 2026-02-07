@@ -7,43 +7,48 @@ export const AppContext = createContext(null);
 const AppContextProvider = (props) => {
 
     const [cartItem, setCartItem] = useState({});
-    const [DeliveryFee, setDeliveryFee] = useState(0);
+
     const [token, setToken] = useState("");
 
-    const [food_list, setfood_List] = useState([]);
+    const [food_list, setfoodList] = useState([]);
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
-    const addToCart = async (itemId) => {
+    const addToCart = async (itemId) => {  
+        if(!token){
+            toast.error("Please Login");
+            return;
+        }
         if (!cartItem[itemId]) {
             setCartItem((prev) => ({ ...prev, [itemId]: 1 }));
         }
         else {
             setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
         }
-
-        if(token){
-            try {
-                const respones = await axios.post(`${url}/api/cart/add`, { itemId }, 
-                    { 
-                        headers : {token}
-                    }
-                );
-                if(respones.data.success){
-                    toast.success(respones.data.message);
+        try {
+            const respones = await axios.post(`${url}/api/cart/add`, { itemId }, 
+                { 
+                    headers : {token}
                 }
-                else{
-                    toast.error(respones.data.message);
-                }
-            } 
-            catch (error) {
-                toast.error(error.message);
+            );
+            if(respones.data.success){
+                toast.success(respones.data.message);
             }
+            else{
+                toast.error(respones.data.message);
+            }
+        } 
+        catch (error) {
+            toast.error(error.message);
         }
         
     }
 
     const removeToCart = async(itemId) => {
+        if(!token){
+            toast.error("Please Login");
+            return;
+        }
         setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
         if(token){
             try {
@@ -65,12 +70,11 @@ const AppContextProvider = (props) => {
         }
     }
 
-
-    const featchFoodList = async () => {
+    
+    const fetchFoodList = async () => {
         const response = await axios.get(`${url}/api/food/list`);
-        console.log(response);
         if (response.data.success) {
-            setfood_List(response.data.data);
+            setfoodList(response.data.data);
         }
         else {
             toast.error(response.data.message);
@@ -106,7 +110,7 @@ const AppContextProvider = (props) => {
 
     useEffect(() => {
 
-        featchFoodList();
+        fetchFoodList();
 
         const savedToken = localStorage.getItem("token");
         if (savedToken) {
@@ -121,22 +125,12 @@ const AppContextProvider = (props) => {
     }, [token]);
 
 
-    useEffect(() => {
-        if (getTotalPrice() > 0) {
-            setDeliveryFee(Math.ceil((Math.random() * 15)));
-        }
-        else if (getTotalPrice() === 0) {
-            setDeliveryFee(0);
-        }
-    }, [cartItem])
-
     const contextValue = {
         food_list,
         cartItem, setCartItem,
         addToCart,
         removeToCart,
         getTotalPrice,
-        DeliveryFee, setDeliveryFee,
         token, setToken,
     }
     return (

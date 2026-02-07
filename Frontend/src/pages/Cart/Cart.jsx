@@ -5,11 +5,16 @@ import { AppContext } from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom'
 function Cart() {
 
-  const { food_list, cartItem, removeToCart, getTotalPrice, DeliveryFee } = useContext(AppContext);
+  const { food_list, cartItem, removeToCart, getTotalPrice } = useContext(AppContext);
+
+  const subtotal = getTotalPrice();
+  const deliveryFee = subtotal > 0 ? 2 : 0;
+  const total = deliveryFee + subtotal; 
 
   const url = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
+
 
   return (
     <div className='cart'>
@@ -55,19 +60,19 @@ function Cart() {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalPrice()}</p>
+              <p>${subtotal}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${DeliveryFee}</p>
+              <p>${deliveryFee}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalPrice() + DeliveryFee}</b>
+              <b>${total}</b>
             </div>
           </div>
           <button onClick={() => navigate("/order")}>Proceed to Checkout</button>

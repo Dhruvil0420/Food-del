@@ -7,16 +7,17 @@ import { AppContext } from '../../context/AppContext';
 function Navbar({ setShowLogin }) {
 
     const [menu, setMenu] = useState("home");
-    const { getTotalPrice } = useContext(AppContext);
+    const { getTotalPrice, setCartItem } = useContext(AppContext);
 
-    const {token,setToken} = useContext(AppContext)
+    const { token, setToken } = useContext(AppContext)
 
-    const navgate = useNavigate();
+    const navigate = useNavigate();
 
     const logout = () => {
-        localStorage.removeItem("token");
         setToken("");
-        navgate("/")
+        setCartItem({});
+        localStorage.removeItem("token");
+        navigate("/")
     }
 
     return (
@@ -34,17 +35,17 @@ function Navbar({ setShowLogin }) {
                     <Link to='/cart'><img src={assets.basket_icon} alt="" /> </Link>
                     <div className={getTotalPrice() === 0 ? "" : "dot"}></div>
                 </div>
-                {!token 
-                ?<button onClick={() => setShowLogin(true)}> sign in</button> 
-                : <div className='navbar-profile'>
-                    <img src={assets.profile_icon} alt="" />
-                    <ul className='nav-profile-dropdown'>
-                        <li> <img src = {assets.bag_icon} alt="" /><p>Orders</p></li>
-                        <hr />
-                        <li onClick={logout}> <img src = {assets.logout_icon} alt="" /><p>Logout</p></li>
-                    </ul>
-                </div>}
-                
+                {!token
+                    ? <button onClick={() => setShowLogin(true)}> sign in</button>
+                    : <div className='navbar-profile'>
+                        <img src={assets.profile_icon} alt="" />
+                        <ul className='nav-profile-dropdown'>
+                            <li onClick={() => navigate("/myorders")} > <img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+                            <hr />
+                            <li onClick={logout}> <img src={assets.logout_icon} alt="" /><p>Logout</p></li>
+                        </ul>
+                    </div>}
+
             </div>
         </div>
     )
