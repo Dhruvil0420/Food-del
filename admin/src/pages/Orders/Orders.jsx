@@ -4,10 +4,12 @@ import axios from "axios"
 import {toast} from 'react-toastify'
 import { assets } from '../../assets/assets';
 import "./Orders.css"
+import Loading from '../../componetes/Loading/Loading';
 
 function Orders() {
 
     const [order,setOrder] = useState([]);
+    const [loading,setLoading] = useState(true);
     const url = import.meta.env.VITE_BACKEND_URL;
 
     const fetchAlluserorders = async() => {
@@ -24,13 +26,15 @@ function Orders() {
        catch (error) {
             toast.error(error.message);
        }
+       finally{
+        setLoading(false);
+       }
     }
 
     const statusHandler = async(event,orderId) => {
         const value = event.target.value;
         const response = await axios.post(`${url}/api/order/change-status`,{status:value,orderId:orderId});
         if(response.data.success){
-            console.log(response.data);
             toast.success(response.data.message);
             fetchAlluserorders();
         }
@@ -41,6 +45,8 @@ function Orders() {
     useEffect(() => {
         fetchAlluserorders();
     },[])
+
+    if(loading) return <Loading/>
 
     return (
         <div className='order add'>

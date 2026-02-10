@@ -2,11 +2,13 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify'
 import "./ListItems.css"
+import Loading from '../../componetes/Loading/Loading.jsx';
 
 
 function ListItems() {
 
     const [list, setList] = useState([]);
+    const [loading,setLoading] = useState(true);
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -18,7 +20,6 @@ function ListItems() {
 
             if (respones.data.success) {
                 setList(respones.data.data);
-                console.log(respones.data.data);
             }
             else {
                 toast.error(respones.data.message);
@@ -26,6 +27,8 @@ function ListItems() {
         }
         catch (error) {
             toast.error(error.message);
+        } finally{
+            setLoading(false);
         }
     }
 
@@ -49,6 +52,8 @@ function ListItems() {
         ListItem();
     }, [])
 
+    if(loading) return <Loading/>
+    
     return (
         <div className='list add flex-col'>
             <p>All Food List</p>

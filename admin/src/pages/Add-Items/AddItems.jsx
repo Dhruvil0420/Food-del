@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { assets, Product_Category } from '../../assets/assets';
 import axios from 'axios'
 import "./AddItems.css"
 import { toast } from 'react-toastify';
-
+import Loading from '../../componetes/Loading/Loading';
 
 function AddItems() {
 
   const url = import.meta.env.VITE_BACKEND_URL;
 
   const [image, setImage] = useState(false);
+  const [loading,setLoading] = useState(false);
 
   const [data, setData] = useState({
     name: "",
@@ -26,7 +27,8 @@ function AddItems() {
   }
 
   const onsubmithandler = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    setLoading(true);
     const formData = new FormData();
 
     try {
@@ -54,14 +56,13 @@ function AddItems() {
     } 
     catch (error) {
       toast.error(error.message);
+    } finally{
+      setLoading(false);
     }
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [onchangehandler])
-
-
+  if(loading) return <Loading/>
+  
   return (
     <div className='add'>
       <form className='flex-col' onSubmit={onsubmithandler}>

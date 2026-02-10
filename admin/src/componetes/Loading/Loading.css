@@ -1,0 +1,24 @@
+.container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    width:100vw;
+}
+
+.loading{
+    border-radius: 50%;
+    border: 3px solid #8cafe8;
+    height: 90px;
+    width: 90px;
+    animation: circle 1s linear infinite;
+    border-top: 3px solid blue;
+}
+@keyframes circle {
+    0% {
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

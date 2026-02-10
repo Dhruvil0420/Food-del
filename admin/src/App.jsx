@@ -16,6 +16,7 @@ function App() {
       <div className="app-content">
         <Sidebar/>
         <Routes>
+          <Route path="/" element = {<AddItems/>}/>
           <Route path="/add" element = {<AddItems/>}/>
           <Route path="/list" element = {<ListItems/>}/>
           <Route path="/orders" element= {<Orders/>}/>

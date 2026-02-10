@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Outfit;
+  scrollbar-width: none;
 }
 
 body{
@@ -23,4 +24,8 @@ hr{
 
 .app-content{
   display: flex;
+  ::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+  }
 }
