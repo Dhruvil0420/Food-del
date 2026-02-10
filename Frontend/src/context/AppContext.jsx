@@ -7,7 +7,8 @@ export const AppContext = createContext(null);
 const AppContextProvider = (props) => {
 
     const [cartItem, setCartItem] = useState({});
-
+    const cartCount = Object.values(cartItem)
+    .reduce((total, qty) => total + qty, 0);
     const [token, setToken] = useState("");
 
     const [food_list, setfoodList] = useState([]);
@@ -132,6 +133,7 @@ const AppContextProvider = (props) => {
         removeToCart,
         getTotalPrice,
         token, setToken,
+        cartCount
     }
     return (
         <AppContext.Provider value={contextValue}>

@@ -7,10 +7,8 @@ import { AppContext } from '../../context/AppContext';
 function Navbar({ setShowLogin }) {
 
     const [menu, setMenu] = useState("home");
-    const { getTotalPrice, setCartItem } = useContext(AppContext);
-
-    const { token, setToken } = useContext(AppContext)
-
+    const { cartCount ,setCartItem } = useContext(AppContext);
+    const { token, setToken } = useContext(AppContext);
     const navigate = useNavigate();
 
     const logout = () => {
@@ -32,9 +30,16 @@ function Navbar({ setShowLogin }) {
             <div className='navbar-right'>
                 <img src={assets.search_icon} alt="" />
                 <div className='navbar-basket-icon'>
-                    <Link to='/cart'><img src={assets.basket_icon} alt="" /> </Link>
-                    <div className={getTotalPrice() === 0 ? "" : "dot"}></div>
+                    <Link to='/cart'><img src= {assets.Store} alt="" /> </Link>
+                    {cartCount > 0 && (
+                        <span className="cart-count">{cartCount}</span>
+                    )}
                 </div>
+                {/* SELLER BUTTON HERE */}
+                <button className="seller-btn">
+                    Seller Dashboard
+                </button>
+
                 {!token
                     ? <button onClick={() => setShowLogin(true)}> sign in</button>
                     : <div className='navbar-profile'>

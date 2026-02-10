@@ -33,18 +33,24 @@ function ListItems() {
     }
 
     const removeItem = async(FooId) => {
+        setLoading(true);
         try {
            const response = await axios.post(`${url}/api/food/remove`,{id:FooId});
-           await ListItem();
            if(response.data.success){
-            toast.success(response.data.message)
+               toast.success(response.data.message)
+               await ListItem();
            }
            else{
-            toast.error(response.data.message);
+            toast.error(response.data.message,{
+                toastId: "remove-error"
+            });
            }
         } 
         catch (error) {
             toast.error(error.message);
+        }
+        finally{
+            setLoading(false);
         }
     }
 

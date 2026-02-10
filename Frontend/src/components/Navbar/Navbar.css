@@ -1,3 +1,8 @@
+:root {
+    --primary-color: tomato;
+    --text-color: #49557e;
+}
+
 .navbar {
     padding: 20px 0;
     display: flex;
@@ -5,7 +10,7 @@
     align-items: center;
 }
 
-.navbar.logo {
+.navbar .logo {
     width: 150px;
 }
 
@@ -14,8 +19,7 @@
     list-style: none;
     font-size: 18px;
     gap: 20px;
-    color: #49557e;
-    font-size: 18px;
+    color: var(--text-color);
 }
 
 .navbar-right {
@@ -24,16 +28,24 @@
     gap: 40px;
 }
 
+.seller-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
 .navbar button {
     background: transparent;
     font-size: 16px;
-    border: 1px solid tomato;
+    border: 1px solid var(--primary-color);
     padding: 10px 30px;
     border-radius: 50px;
     cursor: pointer;
     transition: 0.3s;
-    color: #49557e;
-    border-radius: 50px;
+    color: var(--text-color);
 }
 
 .navbar button:hover {
@@ -42,7 +54,7 @@
 
 .navbar .active {
     padding-bottom: 2px;
-    border-bottom: 2px #49557e solid;
+    border-bottom: 2px var(--text-color) solid;
 }
 
 .navbar li {
@@ -51,97 +63,121 @@
 
 .navbar-basket-icon {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.navbar-basket-icon .dot {
+.navbar-basket-icon img {
+    width: 30px;
+    height: 30px;
+    filter: invert(34%) sepia(12%) saturate(1040%) hue-rotate(187deg) brightness(90%) contrast(88%);
+    transition: 0.2s ease;
+}
+
+.navbar-basket-icon img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.cart-count {
     position: absolute;
-    min-width: 10px;
-    min-height: 10px;
-    background-color: tomato;
-    border-radius: 5px;
-    top: -8px;
-    right: -8px;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 999px;
+    box-shadow: 0 0 0 2px white;
 }
 
-
-@media (max-width:1050px) {
-    .navbar .logo{
+@media (max-width: 1050px) {
+    .navbar .logo {
         width: 140px;
     }
     .navbar-menu {
         gap: 20px;
         font-size: 17px;
     }
-    .navbar-right{
+    .navbar-right {
         gap: 30px;
     }
-    .navbar-right img{
+    .navbar-right img {
         width: 22px;
     }
-    .navbar-right button{
+    .navbar-right button {
         padding: 8px 25px;
     }
 }
 
-
-@media (max-width:900px) {
-    .navbar .logo{
+@media (max-width: 900px) {
+    .navbar .logo {
         width: 120px;
     }
     .navbar-menu {
         gap: 15px;
         font-size: 16px;
     }
-    .navbar-right{
+    .navbar-right {
         gap: 20px;
     }
-    .navbar-right img{
+    .navbar-right img {
         width: 20px;
     }
-    .navbar-right button{
+    .navbar-right button {
         padding: 7px 20px;
         font-size: 15px;
     }
 }
 
-.navbar-profile{
+.navbar-profile {
     position: relative;
 }
 
-.nav-profile-dropdown{
+.nav-profile-dropdown {
     position: absolute;
-    z-index: 1;
+    top: 125%;
+    right: 0%;
+    z-index: 1000;
     display: none;
-    right: 0;
 }
 
-.navbar-profile:hover .nav-profile-dropdown{
+.navbar-profile:hover .nav-profile-dropdown {
     display: flex;
     flex-direction: column;
     gap: 10px;
     background-color: #fff2ef;
     padding: 12px 25px;
     list-style: none;
-    border: tomato 1px solid;
+    border: 1px solid var(--primary-color);
     outline: 2px solid white;
     border-radius: 4px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
-.nav-profile-dropdown li{
+.nav-profile-dropdown li {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
 
-.nav-profile-dropdown img{
+.nav-profile-dropdown img {
     width: 20px;
 }
-.nav-profile-dropdown li:hover{
-    color: tomato;
+
+.nav-profile-dropdown li:hover {
+    color: var(--primary-color);
 }
-@media (max-width:750px) {
-    
+
+@media (max-width: 750px) {
     .navbar-menu {
         display: none;
     }

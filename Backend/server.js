@@ -8,6 +8,7 @@ import userRouter from './routes/user.routes.js';
 import cartRouter from './routes/cart.routes.js';
 import placeOrderRouter from './routes/placeorder.routes.js';
 import connectCloudinary from './config/cloudinary.js';
+import adminRoutes from './routes/admin.routes.js';
 
 // app config
 const app = express()
@@ -26,6 +27,7 @@ app.use('/api/food', foodRouter);
 app.use('/api/user',userRouter);
 app.use('/api/cart',cartRouter);
 app.use('/api/order',placeOrderRouter);
+app.use("/api/admin",adminRoutes);
 // middleware
 
 

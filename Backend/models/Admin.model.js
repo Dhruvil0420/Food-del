@@ -1,6 +1,6 @@
-import mongoos from "mongoose"
+import mongoose from "mongoose"
 
-const AdimModelSchem = new mongoos.Schema({
+const AdminModelSchema = new mongoose.Schema({
     name:{
         type : String,
         required: true
@@ -8,15 +8,16 @@ const AdimModelSchem = new mongoos.Schema({
     email: {
         type: String,
         required: true,
+        lowercase : true,
+        unique: true
     },
     password: {
         type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
+        required: true,
+        minlength: 6,
     }
 });
 
-const Admin = mongoos.
+const Admin = mongoose.models.Admin || mongoose.model("Admin",AdminModelSchema);
+
+export default Admin;

@@ -17,7 +17,16 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
       {ShowLogin ? <Loginpopup setShowLogin={setShowLogin} /> : <></>}
       <div className='app'>
         <Navbar setShowLogin={setShowLogin} />
