@@ -1,27 +1,29 @@
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-const adminMiddeleware = async (req, res, next) => {
-    const { token } = req.headers;
+const adminMiddleware = (req, res, next) => {
+    try {
 
-    if (!token) {
-        return res.json({
+        const {token} = req.headers;
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            });
+        }
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET_KEY
+        );
+
+        req.adminId = decoded.id;
+        next();
+
+    } catch (error) {
+        return res.status(401).json({
             success: false,
-            message: "Not Authrozies Login Again "
+            message: "Invalid or expired token"
         });
     }
+};
 
-    try {
-        const decoded = await jwt.verify(token,process.env.JWT_SECRET_KEY);
-    
-        req.adminId = decoded;
-        next();
-    } 
-    catch (error) {
-        res.json({
-            success: false,
-            message: error.message
-        })
-    }
-}
-
-export default adminMiddeleware;
+export default adminMiddleware;

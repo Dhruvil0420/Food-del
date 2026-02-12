@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { assets, Product_Category } from '../../assets/assets';
 import axios from 'axios'
 import "./AddItems.css"
 import { toast } from 'react-toastify';
 import Loading from '../../componetes/Loading/Loading';
+import { AppContext } from '../../context/AppContext';
 
 function AddItems() {
 
@@ -18,6 +19,8 @@ function AddItems() {
     category: "Salad",
     price: ""
   })
+
+  const { adminToken } = useContext(AppContext)
 
   const onchangehandler = (event) => {
     const name = event.target.name;
@@ -38,7 +41,9 @@ function AddItems() {
       formData.append("category", data.category);
       formData.append("image",image);
   
-      const response = await axios.post(`${url}/api/food/add`,formData,{ headers: {token :token}});
+      const response = await axios.post(`${url}/api/admin/add`,formData,{ 
+        headers: {token: adminToken}
+      });
   
       if(response.data.success){
         setData({

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 //token Gerater 
 
 const createToken = (id) => {
-     if (!process.env.JWT_SECRET_KEY)
+    if (!process.env.JWT_SECRET_KEY)
         throw new Error("JWT secret missing");
 
     return jwt.sign(
@@ -67,29 +67,29 @@ const registerAdmin = async (req, res) => {
     }
 }
 
-const  loginAdmin = async(req,res) => {
+const loginAdmin = async (req, res) => {
     try {
-        const { email , password } = req.body
+        const { email, password } = req.body
 
-        if(!email || !password) {
+        if (!email || !password) {
             return res.json({
                 success: false,
                 message: "All fields are required"
             })
         }
 
-        const admin = await AdminModel.findOne({email:email});
+        const admin = await AdminModel.findOne({ email: email });
 
-        if(!admin){
+        if (!admin) {
             return res.json({
                 success: false,
                 message: "Email Not exites"
             })
         }
 
-        const ismatch = await bcrypt.compare(password,admin.password);
+        const ismatch = await bcrypt.compare(password, admin.password);
 
-        if(!ismatch){
+        if (!ismatch) {
             return res.json({
                 success: false,
                 message: "Password Is Not Mathed"
@@ -102,7 +102,7 @@ const  loginAdmin = async(req,res) => {
             success: true,
             token: token
         })
-    } 
+    }
     catch (error) {
         res.json({
             success: false,
@@ -111,4 +111,4 @@ const  loginAdmin = async(req,res) => {
     }
 }
 
-export { registerAdmin , loginAdmin }
+export { registerAdmin, loginAdmin }

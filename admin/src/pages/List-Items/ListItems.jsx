@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify'
 import "./ListItems.css"
 import Loading from '../../componetes/Loading/Loading.jsx';
+import { AppContext } from '../../context/AppContext.jsx';
 
 
 function ListItems() {
@@ -12,11 +13,13 @@ function ListItems() {
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
+    const {adminToken} = useContext(AppContext);
+    
     const ListItem = async () => {
-
-
         try {
-            const respones = await axios.get(`${url}/api/food/list`);
+            const respones = await axios.get(`${url}/api/admin/list`,{
+                headers: {token: adminToken}
+            });
 
             if (respones.data.success) {
                 setList(respones.data.data);
@@ -35,7 +38,9 @@ function ListItems() {
     const removeItem = async(FooId) => {
         setLoading(true);
         try {
-           const response = await axios.post(`${url}/api/food/remove`,{id:FooId});
+           const response = await axios.post(`${url}/api/admin/remove`,{id:FooId},{
+            headers: {token:adminToken}
+           });
            if(response.data.success){
                toast.success(response.data.message)
                await ListItem();
@@ -55,8 +60,10 @@ function ListItems() {
     }
 
     useEffect(() => {
-        ListItem();
-    }, [])
+        if(adminToken) {
+            ListItem();
+        }
+    }, [adminToken])
 
     if(loading) return <Loading/>
     

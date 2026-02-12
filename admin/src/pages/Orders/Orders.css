@@ -1,46 +1,78 @@
 .order-item{
     border: solid tomato;
-    align-items: start;
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+    align-items: start;
     padding: 20px;
-    margin: 30px 0px;
+    margin: 30px 0;
     gap: 30px;
     font-size: 14px;
     color: #505050;
 }
 
+/* Existing styling untouched */
 .order-item-food, .order-item-name{
     font-weight: 600;
 }
 
 .order-item-name{
-    margin-top: 30px ;
+    margin-top: 30px;
     margin-bottom: 5px;
 }
 
 .order-item-address{
     margin-bottom: 10px;
 }
+
 .order-item select{
-    background-color: #ffe8e4 ;
+    background-color: #ffe8e4;
     width: max(10vw,120px);
     padding: 10px;
     outline: none;
     border: tomato 1px solid;
 }
 
-@media (max-width:1000px) {
+/* ===== Tablet ===== */
+@media (max-width: 1000px){
     .order-item{
+        grid-template-columns: 60px 1fr 1fr;
         font-size: 12px;
-        grid-template-columns: 0.5fr 2fr 1fr;
-        padding: 15px 8px;
+        padding: 15px 10px;
+        gap: 15px;
     }
-    .order-item select{
-        padding: 5px;
-        font-size: 12px;
-    }
+
     .order-item img{
         width: 40px;
+    }
+
+    .order-item select{
+        width: 100%;
+        padding: 6px;
+        font-size: 12px;
+    }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 600px){
+    .order-item{
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+        margin: 15px 0;
+        font-size: 13px;
+    }
+
+    .order-item img{
+        width: 35px;
+    }
+
+    .order-item-name{
+        margin-top: 10px;
+    }
+
+    .order-item select{
+        width: 100%;
+        font-size: 13px;
+        padding: 8px;
     }
 }

@@ -141,7 +141,7 @@
 
 .nav-profile-dropdown {
     position: absolute;
-    top: 125%;
+    top: 110%;
     right: 0%;
     z-index: 1000;
     display: none;
@@ -180,5 +180,18 @@
 @media (max-width: 750px) {
     .navbar-menu {
         display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .navbar-right .seller-btn{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 830px) {
+    .navbar-menu {
+       gap: 10px; 
+       font-size: 14px;
     }
 }

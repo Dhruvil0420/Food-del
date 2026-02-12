@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useState } from 'react';
 import axios from "axios"
 import {toast} from 'react-toastify'
 import { assets } from '../../assets/assets';
 import "./Orders.css"
 import Loading from '../../componetes/Loading/Loading';
+import { AppContext } from '../../context/AppContext';
 
 function Orders() {
 
@@ -12,12 +13,13 @@ function Orders() {
     const [loading,setLoading] = useState(true);
     const url = import.meta.env.VITE_BACKEND_URL;
 
+    const {adminToken} = useContext(AppContext);
+
     const fetchAlluserorders = async() => {
        try {
             const response = await axios(`${url}/api/order/list`);
             if(response.data.success){
                 setOrder(response.data.data);
-                console.log(response.data.data);
             }
             else{
                 toast.error(response.data.message)
@@ -33,7 +35,9 @@ function Orders() {
 
     const statusHandler = async(event,orderId) => {
         const value = event.target.value;
-        const response = await axios.post(`${url}/api/order/change-status`,{status:value,orderId:orderId});
+        const response = await axios.post(`${url}/api/order/change-status`,{status:value,orderId:orderId},{
+            headers:{token:adminToken}
+        });
         if(response.data.success){
             toast.success(response.data.message);
             fetchAlluserorders();

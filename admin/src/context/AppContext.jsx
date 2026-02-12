@@ -1,17 +1,43 @@
-import { createContext } from "react";
+import { useState, useEffect, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext(null);
 
-const AppContextProvider = (props) => {
-    const contextValue = {
-        
-    }
+const AppContextProvider = ({ children }) => {
 
-    return (
-            <AppContext.Provider value={contextValue}>
-                {props.children}
-            </AppContext.Provider>
-    )
-}
+  const navigate = useNavigate();
+
+  const [adminToken, setAdminToken] = useState(null);
+  const [showLogin, setShowLogin] = useState(true);
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    setAdminToken(null);
+    setShowLogin(true);
+    navigate("/admin/login", { replace: true });
+  };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("adminToken");
+    if (saved) {
+      setAdminToken(saved);
+      setShowLogin(false);
+    }
+  }, []);
+
+  const contextValue = {
+    adminToken,
+    setAdminToken,
+    showLogin,
+    setShowLogin,
+    handleLogout
+  };
+
+  return (
+    <AppContext.Provider value={contextValue}>
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 export default AppContextProvider;

@@ -28,8 +28,10 @@ const AppContextProvider = (props) => {
         }
         try {
             const respones = await axios.post(`${url}/api/cart/add`, { itemId }, 
-                { 
-                    headers : {token}
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
             if(respones.data.success){
@@ -54,8 +56,10 @@ const AppContextProvider = (props) => {
         if(token){
             try {
                 const respones = await axios.post(`${url}/api/cart/remove`, { itemId }, 
-                    { 
-                        headers : {token}
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
                     }
                 );
                 if(respones.data.success){
@@ -84,9 +88,13 @@ const AppContextProvider = (props) => {
 
     const featchFoodcartData = async() => {
 
-        const response = await axios.get(`${url}/api/cart/get`,{
-            headers: {token}
-        });
+        const response = await axios.get(`${url}/api/cart/get`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
         if(response.data.success){
             setCartItem(response.data.cartData);
         }

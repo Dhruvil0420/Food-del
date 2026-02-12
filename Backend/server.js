@@ -28,6 +28,7 @@ app.use('/api/user',userRouter);
 app.use('/api/cart',cartRouter);
 app.use('/api/order',placeOrderRouter);
 app.use("/api/admin",adminRoutes);
+
 // middleware
 
 

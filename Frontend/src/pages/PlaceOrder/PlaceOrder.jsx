@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 function PlaceOrder() {
 
-  const { getTotalPrice, food_list, cartItem, token } = useContext(AppContext);
-
+  const { getTotalPrice, food_list, cartItem, token , setCartItem} = useContext(AppContext);
+  
   const subtotal = getTotalPrice();
   const deliveryFee = subtotal > 0 ? 2 : 0;
   const total = deliveryFee + subtotal;
@@ -56,7 +56,7 @@ function PlaceOrder() {
           address: data
         },
         {
-          headers: { token }
+          headers: {Authorization: `Bearer ${token}`}
         }
       );
 

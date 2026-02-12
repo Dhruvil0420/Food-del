@@ -28,7 +28,7 @@ function Loginpopup({ setShowLogin }) {
 
 
     // Login Function
-    const onLogin = async () => {
+    const onLogin = async (event) => {
         event.preventDefault();
         let newurl = url;
         if (State === "Login") {
@@ -41,7 +41,6 @@ function Loginpopup({ setShowLogin }) {
         try {
             const response = await axios.post(newurl, userData);
             if (response.data.success) {
-                console.log(response);
                 setToken(response.data.token);
                 localStorage.setItem("token", response.data.token);
                 setShowLogin(false);
@@ -54,8 +53,6 @@ function Loginpopup({ setShowLogin }) {
         catch (error) {
             toast.error(error.message)
         }
-
-
     }
 
 

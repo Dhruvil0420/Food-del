@@ -21,7 +21,7 @@ function Verify() {
       const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
       if (response.data.success) {
         toast.success(response.data.message);
-        setCartItem({});
+        
         navigate("/myorders");
       }
       else {

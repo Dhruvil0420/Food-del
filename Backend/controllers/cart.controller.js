@@ -114,4 +114,29 @@ const getCart = async (req, res) => {
     }
 }
 
-export { addTocart, removeTocart ,getCart}
+const clearCart = async(req,res) => {
+    try {
+        const userId = req.userId;
+        const user = await userModel.findById(userId);
+        if(!user){
+            return res.json({
+                sucess: false,
+                message: "User Not exites"
+            })
+        }
+        user.cartData = {};
+        await user.save();
+        
+        return res.status(200).json({
+            success: true,
+            message: "Cart cleared"
+        });
+    } 
+    catch (error) {
+        res.json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+export { addTocart, removeTocart ,getCart, clearCart}

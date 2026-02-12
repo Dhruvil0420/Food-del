@@ -11,6 +11,14 @@ function Navbar({ setShowLogin }) {
     const { token, setToken } = useContext(AppContext);
     const navigate = useNavigate();
 
+    const goToAdmin = () => {
+        localStorage.removeItem("adminToken"); // clear admin auth
+        window.location.href = import.meta.env.VITE_ADMIN_URL + "/admin/login";
+    };
+
+
+
+
     const logout = () => {
         setToken("");
         setCartItem({});
@@ -28,16 +36,16 @@ function Navbar({ setShowLogin }) {
                 <a href="#footer" onClick={() => setMenu("contact-us")} className={menu === "contact-us" ? "active" : ""}>contact us</a>
             </ul>
             <div className='navbar-right'>
-                <img src={assets.search_icon} alt="" />
                 <div className='navbar-basket-icon'>
                     <Link to='/cart'><img src= {assets.Store} alt="" /> </Link>
                     {cartCount > 0 && (
                         <span className="cart-count">{cartCount}</span>
                     )}
                 </div>
+
                 {/* SELLER BUTTON HERE */}
-                <button className="seller-btn">
-                    Seller Dashboard
+                <button onClick={() => goToAdmin()} className="seller-btn">
+                    Admin Panle
                 </button>
 
                 {!token
@@ -49,7 +57,7 @@ function Navbar({ setShowLogin }) {
                             <hr />
                             <li onClick={logout}> <img src={assets.logout_icon} alt="" /><p>Logout</p></li>
                         </ul>
-                    </div>}
+                </div>}
 
             </div>
         </div>
