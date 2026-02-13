@@ -37,17 +37,31 @@ const placeOrder = async (req, res) => {
                 })
             }
 
+            
             totalAmount += food.price * item.quantity;
-
+            
             line_items.push({
                 price_data: {
                     currency: "inr",
                     product_data: { name: food.name },
-                    unit_amount: (food.price + 2) * 100 * 80
+                    unit_amount: (food.price) * 100 * 80
                 },
                 quantity: item.quantity
             });
+
         }
+        const Delivery_Fee = 2;
+
+        totalAmount += Delivery_Fee;
+
+        line_items.push({
+            price_data: {
+                currency: "inr",
+                product_data: { name: "Delivery Charge" },
+                unit_amount: Delivery_Fee * 100 * 80
+            },
+            quantity: 1
+        });
 
         const order = await orderModel.create({
             userId,
@@ -86,16 +100,16 @@ const verifyOrder = async (req, res) => {
 
         if (!order)
             return res.status(404).json({
-                success:false,
-                message:"Order not found"
+                success: false,
+                message: "Order not found"
             });
 
         if (success == "true") {
             order.payment = true;
             await order.save();
 
-            await userModel.findByIdAndUpdate(order.userId,{cartData: {}});
-            
+            await userModel.findByIdAndUpdate(order.userId, { cartData: {} });
+
             res.status(200).json({
                 success: true,
                 message: "Paid"
@@ -167,15 +181,15 @@ const listOrder = async (req, res) => {
 const updateStatus = async (req, res) => {
     try {
         const { status, orderId } = req.body;
-        if(!status || !orderId){
+        if (!status || !orderId) {
             return res.status(400).json({
-                success:false,
-                message:"Missing fields"
+                success: false,
+                message: "Missing fields"
             });
         }
-        const allowed = ["Food Processing","Out Of Delivery","Delivery","Cancelled"];
+        const allowed = ["Food Processing", "Out Of Delivery", "Delivery", "Cancelled"];
 
-        if(!allowed.includes(status)){
+        if (!allowed.includes(status)) {
             res.status(400).json({
                 success: false,
                 message: "Invaild status"
@@ -184,13 +198,13 @@ const updateStatus = async (req, res) => {
 
         const update = await orderModel.findByIdAndUpdate(orderId, { status: status });
 
-        if(!update){
+        if (!update) {
             res.status(404).json({
                 success: false,
                 message: "Order Not found"
             })
         }
-        
+
         res.json({
             success: true,
             message: "Status Update"
@@ -204,4 +218,4 @@ const updateStatus = async (req, res) => {
     }
 
 }
-export { placeOrder, verifyOrder, userOrders, listOrder ,updateStatus}
+export { placeOrder, verifyOrder, userOrders, listOrder, updateStatus }

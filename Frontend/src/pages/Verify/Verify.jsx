@@ -15,7 +15,7 @@ function Verify() {
   const url = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
-  const {token} = useContext(AppContext);
+  const { setCartItem } = useContext(AppContext);
   const verifyPayment = async () => {
     try {
 
@@ -26,6 +26,7 @@ function Verify() {
     }
       const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
       if (response.data.success) {
+        setCartItem({});
         toast.success(response.data.message);
         navigate("/myorders");
       }
