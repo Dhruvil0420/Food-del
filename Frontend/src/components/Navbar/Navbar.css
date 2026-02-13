@@ -221,18 +221,3 @@
         font-size: 10px;
     }
 }
-
-@media (max-width: 400px) {
-    .navbar {
-        padding: 10px 0;
-    }
-    .navbar-right {
-        gap: 8px;
-    }
-    .navbar-right .seller-btn {
-        display: none;
-    }
-    .navbar-profile {
-        display: none;
-    }
-}
