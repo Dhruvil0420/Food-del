@@ -141,7 +141,7 @@
 
 .nav-profile-dropdown {
     position: absolute;
-    top: 110%;
+    top: 120%;
     right: 0%;
     z-index: 1000;
     display: none;

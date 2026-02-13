@@ -173,6 +173,7 @@ function PlaceOrder() {
         />
 
       </div>
+      
       <div className="place-order-right">
         <div className="cart-total">
 

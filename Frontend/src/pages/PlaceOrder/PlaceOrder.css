@@ -37,3 +37,9 @@
 .place-order-right button{
     margin-top: 30px;
 }
+
+@media (max-width:360px) {
+    .place-order{
+        flex-direction: column;
+    }
+}
