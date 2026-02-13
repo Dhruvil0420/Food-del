@@ -79,9 +79,23 @@ const placeOrder = async (req, res) => {
 
 const verifyOrder = async (req, res) => {
     const { orderId, success } = req.body
+
     try {
+
+        const order = await orderModel.findById(orderId);
+
+        if (!order)
+            return res.status(404).json({
+                success:false,
+                message:"Order not found"
+            });
+
         if (success == "true") {
-            await orderModel.findByIdAndUpdate(orderId, { payment: true });
+            order.payment = true;
+            await order.save();
+
+            await userModel.findByIdAndUpdate(order.userId,{cartData: {}});
+            
             res.status(200).json({
                 success: true,
                 message: "Paid"

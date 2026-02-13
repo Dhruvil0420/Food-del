@@ -38,7 +38,7 @@ function PlaceOrder() {
 
   const placedorder = async (event) => {
     event.preventDefault();
-
+    
     const order_items = food_list
     .filter(food => cartItem[food._id] > 0)
     .map(food => ({

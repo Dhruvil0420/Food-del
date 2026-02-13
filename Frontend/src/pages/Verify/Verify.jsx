@@ -14,14 +14,19 @@ function Verify() {
   const orderId = searchParams.get("orderId");
   const url = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-  const {setCartItem} = useContext(AppContext);
 
+  const {token} = useContext(AppContext);
   const verifyPayment = async () => {
     try {
+
+      if (!success || !orderId) {
+      toast.error("Invalid payment response");
+      navigate("/");
+      return;
+    }
       const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
       if (response.data.success) {
         toast.success(response.data.message);
-        
         navigate("/myorders");
       }
       else {
@@ -33,7 +38,6 @@ function Verify() {
       toast.error(error.message)
     }
   }
-  console.log(success, orderId);
 
   useEffect(() => {
     verifyPayment()

@@ -195,3 +195,44 @@
        font-size: 14px;
     }
 }
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 12px 0;
+    }
+    .navbar .logo {
+        width: 110px;
+    }
+    .navbar-right {
+        gap: 12px;
+    }
+    .navbar-right button {
+        padding: 6px 16px;
+        font-size: 13px;
+    }
+    .navbar-basket-icon img {
+        width: 24px;
+        height: 24px;
+    }
+    .cart-count {
+        min-width: 16px;
+        height: 16px;
+        line-height: 16px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar {
+        padding: 10px 0;
+    }
+    .navbar-right {
+        gap: 8px;
+    }
+    .navbar-right .seller-btn {
+        display: none;
+    }
+    .navbar-profile {
+        display: none;
+    }
+}
