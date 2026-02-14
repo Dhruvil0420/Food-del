@@ -22,53 +22,12 @@ a{
   margin: auto;
 }
 
-/* Container spacing */
-.Toastify__toast-container {
-    width: 320px;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
+@media (max-width: 900px) {
+  .app{
+    width: 90%;
+    margin: auto;
+  }
 }
-
-/* Toast card shape */
-.Toastify__toast {
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: 14px;
-    font-weight: 500;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-/* Success */
-.Toastify__toast--success {
-    background: #e6f7ec;
-    color: #1f7a3a;
-}
-
-/* Error */
-.Toastify__toast--error {
-    background: #fdecea;
-    color: #c0392b;
-}
-
-/* Info */
-.Toastify__toast--info {
-    background: #e8f1ff;
-    color: #2c5282;
-}
-
-/* Warning */
-.Toastify__toast--warning {
-    background: #fff4e5;
-    color: #b7791f;
-}
-
-/* Progress bar */
-.Toastify__progress-bar {
-    height: 4px;
-    border-radius: 4px;
-}
-
-
 
 @keyframes fadeIn {
   0%{

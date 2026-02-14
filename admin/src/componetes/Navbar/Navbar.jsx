@@ -1,6 +1,6 @@
 import React from 'react';
 import { assets } from '../../assets/assets.js';
-import './navbar.css'
+import './Navbar.css'
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext.jsx';
 
