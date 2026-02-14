@@ -45,7 +45,7 @@ function Navbar({ setShowLogin }) {
 
                 {/* SELLER BUTTON HERE */}
                 <button onClick={() => goToAdmin()} className="seller-btn">
-                    Admin Panle
+                    Admin Panel
                 </button>
 
                 {!token
