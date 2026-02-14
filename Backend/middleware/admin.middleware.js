@@ -10,16 +10,20 @@ const adminMiddleware = (req, res, next) => {
                 message: "Unauthorized"
             });
         }
+
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET_KEY
         );
 
+        
         req.adminId = decoded.id;
+        req.role = decoded.role; 
+
         next();
 
     } catch (error) {
-        return res.status(401).json({
+        return res.json({
             success: false,
             message: "Invalid or expired token"
         });

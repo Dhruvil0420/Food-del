@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast"
 
 export const AppContext = createContext(null);
 
@@ -15,6 +16,7 @@ const AppContextProvider = ({ children }) => {
     setAdminToken(null);
     setShowLogin(true);
     navigate("/admin/login", { replace: true });
+    toast.success("Admin Logout")
   };
 
   useEffect(() => {

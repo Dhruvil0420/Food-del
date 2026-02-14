@@ -4,7 +4,7 @@ import { Route,Routes } from "react-router-dom"
 import AddItems from "./pages/Add-Items/AddItems.jsx"
 import ListItems from "./pages/List-Items/ListItems.jsx"
 import Orders from './pages/Orders/Orders.jsx'
-import { ToastContainer } from 'react-toastify';
+import  { Toaster } from 'react-hot-toast';
 import LoginPopup from "./componetes/LoginPopup/LoginPopup.jsx"
 import { useContext } from "react"
 import { AppContext } from "./context/AppContext.jsx"
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div>
-      <ToastContainer />
+      <Toaster/>
 
       {/* Hide layout on login page */}
       {!isLoginPage && adminToken && (

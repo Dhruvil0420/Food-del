@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import "./ListItems.css"
 import Loading from '../../componetes/Loading/Loading.jsx';
 import { AppContext } from '../../context/AppContext.jsx';

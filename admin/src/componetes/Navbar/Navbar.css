@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 10px 4%;
     background: #ffffff;
     border-bottom: 1px solid #e5e5e5;
@@ -51,6 +50,7 @@
 @media (max-width: 600px) {
     .navbar {
         padding: 10px 16px;
+        width: 100vw;
     }
 
     .logo {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { assets } from '../../assets/assets.js';
 import './Navbar.css'
 import { useContext } from 'react';

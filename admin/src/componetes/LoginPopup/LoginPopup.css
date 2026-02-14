@@ -65,48 +65,31 @@
 
 /* Phone screen responsiveness */
 @media (max-width: 480px) {
-    .login-popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: 100dvh;
-        padding: 16px;
-    }
 
-    .login-popup-container {
-        width: 100%;
-        max-width: 100%;
-        padding: 20px 16px;
+    .login-popup-container{
+        width: 90%;
+        padding: 18px 20px;
         gap: 18px;
+        font-size: 13px;
+    }
+
+    .login-popup-title h2{
+        font-size: 18px;
+    }
+
+    .login-popup-inputs input{
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .login-popup-container button{
+        padding: 8px;
         font-size: 14px;
     }
 
-    .login-popup-title h2 {
-        font-size: 1.25rem;
-    }
-
-    .login-popup-inputs {
-        gap: 14px;
-    }
-
-    .login-popup input {
-        padding: 12px;
-        font-size: 16px; /* Prevents iOS zoom on focus */
-    }
-
-    .login-popup-container button {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .login-popup-condition {
-        margin-top: -10px;
-    }
-
-    .login-popup-condition p {
+    .login-popup-condition{
         font-size: 12px;
-        line-height: 1.4;
     }
+
 }
+

@@ -44,7 +44,7 @@ const placeOrder = async (req, res) => {
                 price_data: {
                     currency: "inr",
                     product_data: { name: food.name },
-                    unit_amount: (food.price) * 100 * 80
+                    unit_amount: (food.price) * 100 * 1
                 },
                 quantity: item.quantity
             });
@@ -58,7 +58,7 @@ const placeOrder = async (req, res) => {
             price_data: {
                 currency: "inr",
                 product_data: { name: "Delivery Charge" },
-                unit_amount: Delivery_Fee * 100 * 80
+                unit_amount: Delivery_Fee * 100 * 1
             },
             quantity: 1
         });

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import './Cart.css'
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
@@ -39,9 +38,9 @@ function Cart() {
               <div className="cart-items-title cart-items-item" >
                 <img src={item.image} alt={item.name} />
                 <p>{item.name}</p>
-                <p>${item.price}</p>
+                <p>₹{item.price}</p>
                 <p>{cartItem[item._id]}</p>
-                <p>${item.price * cartItem[item._id]}</p>
+                <p>₹{item.price * cartItem[item._id]}</p>
                 <p className='cross' onClick={() => removeToCart(item._id)}>x</p>
               </div>
               <hr />
@@ -60,19 +59,19 @@ function Cart() {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${subtotal}</p>
+              <p>₹{subtotal}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${deliveryFee}</p>
+              <p>₹{deliveryFee}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${total}</b>
+              <b>₹{total}</b>
             </div>
           </div>
           <button onClick={() => navigate("/order")}>Proceed to Checkout</button>

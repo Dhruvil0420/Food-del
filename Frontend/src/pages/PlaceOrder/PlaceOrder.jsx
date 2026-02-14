@@ -3,7 +3,7 @@ import './PlaceOrder.css'
 import { AppContext } from '../../context/AppContext';
 import { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 function PlaceOrder() {
@@ -182,19 +182,19 @@ function PlaceOrder() {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${subtotal}</p>
+              <p>₹{subtotal}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${deliveryFee}</p>
+              <p>₹{deliveryFee}</p>
             </div>
             <hr />
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${total}</b>
+              <b>₹{total}</b>
             </div>
           </div>
           <button type='submit' >Proceed to Payment</button>

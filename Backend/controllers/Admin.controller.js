@@ -4,24 +4,25 @@ import jwt from 'jsonwebtoken'
 
 //token Gerater 
 
-const createToken = (id) => {
+const createToken = (id, role) => {
     if (!process.env.JWT_SECRET_KEY)
         throw new Error("JWT secret missing");
 
     return jwt.sign(
-        { id },
+        { id , role },
         process.env.JWT_SECRET_KEY,
         { expiresIn: "7d" }
     )
+
 }
 
 // Admin register
 
 const registerAdmin = async (req, res) => {
     try {
-        const { name, email, password } = req.body
+        const { name, email, password, role } = req.body
 
-        if (!name || !email || !password) {
+        if (!name || !email || !password ) {
             return res.json({
                 success: false,
                 message: "All fields are required"
@@ -49,10 +50,11 @@ const registerAdmin = async (req, res) => {
         const admin = await AdminModel.create({
             name: name,
             email: email,
-            password: hashpassword
+            password: hashpassword,
+            role: role
         })
 
-        const token = createToken(admin._id);
+        const token = createToken(admin._id, admin.role);
 
         res.json({
             success: true,
@@ -96,10 +98,11 @@ const loginAdmin = async (req, res) => {
             })
         }
 
-        const token = createToken(admin._id);
+        const token = createToken(admin._id,admin.role);
 
         res.json({
             success: true,
+            message: "Admin Login",
             token: token
         })
     }

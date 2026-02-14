@@ -5,7 +5,7 @@ import { useState } from 'react';
 import axios from "axios"
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 function LoginPopup() {
 
@@ -30,6 +30,7 @@ function LoginPopup() {
                 localStorage.setItem("adminToken",response.data.token);
                 navigate("/")
                 setShowLogin(false);
+                toast.success(response.data.message);
             }
             else{
                 toast.error(response.data.message);

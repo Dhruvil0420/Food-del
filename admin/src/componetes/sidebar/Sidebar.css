@@ -30,7 +30,24 @@
     background-color: #fff0ed;
 }
 @media (max-width:900px) {
+    .sidebar{
+        width: 20%;
+    }
     .sidebar-option p{
         display: none;
+    }
+}
+@media (max-width: 768px){
+    .sidebar{
+        width: 70px;
+    }
+
+    .sidebar-option p{
+        display: none;
+    }
+
+    .sidebar-options{
+        padding-left: 10px;
+        align-items: center;
     }
 }

@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import './Verify.css'
 import axios from 'axios';
 import { useEffect } from 'react';
-import { toast }  from "react-toastify"
+import { toast }  from "react-hot-toast"
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 

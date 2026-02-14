@@ -6,7 +6,7 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import Cart from './pages/Cart/Cart.jsx'
 import Footer from './components/Footer/Footer.jsx';
 import Loginpopup from './components/Loginpopup/Loginpopup.jsx';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import Verify from './pages/Verify/Verify.jsx';
 import MyOrders from './pages/MyOrders/MyOrders.jsx';
 
@@ -17,16 +17,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
+      <Toaster/>
       {ShowLogin ? <Loginpopup setShowLogin={setShowLogin} /> : <></>}
       <div className='app'>
         <Navbar setShowLogin={setShowLogin} />

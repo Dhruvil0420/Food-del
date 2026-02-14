@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { menu_list } from '../../assets/assets';
 import './Exploremenu.css'
 function Exploremenu({category,setCategory}) {

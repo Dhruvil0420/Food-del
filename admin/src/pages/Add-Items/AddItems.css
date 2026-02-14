@@ -1,10 +1,11 @@
 .add{
     font-size: 16px;
-    margin-left: max(5vw,25px);
     margin-top: 50px;
     color: #6d6d6d;
-    width: 70%;
+    padding: 0 20px;
+    width: 100%;
 }
+
 
 .flex-col{
     display: flex;

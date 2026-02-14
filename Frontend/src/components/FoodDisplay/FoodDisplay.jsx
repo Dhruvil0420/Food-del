@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import FoodItem from '../FoodItem/FoodItem';
 import './FoodDisplay.css'
 import { AppContext } from '../../context/AppContext';

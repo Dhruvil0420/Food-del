@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { assets, Product_Category } from '../../assets/assets';
 import axios from 'axios'
 import "./AddItems.css"
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import Loading from '../../componetes/Loading/Loading';
 import { AppContext } from '../../context/AppContext';
 
