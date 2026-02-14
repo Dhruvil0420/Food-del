@@ -1,5 +1,3 @@
-import React from 'react';
-import { assets } from '../../assets/assets';
 import './LoginPopup.css'
 import { useState } from 'react';
 import axios from "axios"
@@ -9,33 +7,34 @@ import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 function LoginPopup() {
 
-    const [email,setEmail] = useState('dhruvilparmar@gmail.com');
-    const [password,setPassword] = useState('Dhruvil@20');
-    const url = import.meta.env.VITE_BACKEND_URL ;
+    const [email, setEmail] = useState('dhruvilparmar@gmail.com');
+    const [password, setPassword] = useState('Dhruvil@20');
+
+    const url = import.meta.env.VITE_BACKEND_URL;
 
     const navigate = useNavigate();
 
-    const { setShowLogin  ,setAdminToken } = useContext(AppContext);
+    const { setShowLogin, setAdminToken } = useContext(AppContext);
 
-    const onLogin = async(event) => {
+    const onLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${url}/api/admin/login`,{
-                email:email,
-                password:password
+            const response = await axios.post(`${url}/api/admin/login`, {
+                email: email,
+                password: password
             });
 
-            if(response.data.success){
+            if (response.data.success) {
                 setAdminToken(response.data.token);
-                localStorage.setItem("adminToken",response.data.token);
+                localStorage.setItem("adminToken", response.data.token);
                 navigate("/")
                 setShowLogin(false);
                 toast.success(response.data.message);
             }
-            else{
+            else {
                 toast.error(response.data.message);
             }
-        } 
+        }
         catch (error) {
             toast.error(error.message)
         }
@@ -43,7 +42,7 @@ function LoginPopup() {
 
     return (
         <div className='login-popup'>
-            <form onSubmit = {onLogin} className='login-popup-container'>
+            <form onSubmit={onLogin} className='login-popup-container'>
                 <div className="login-popup-title">
                     <h2>Admin Login</h2>
                 </div>
@@ -56,8 +55,8 @@ function LoginPopup() {
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
-                    <input 
-                        type="password" 
+                    <input
+                        type="password"
                         required
                         placeholder='password'
                         name='password'
