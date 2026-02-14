@@ -9,8 +9,8 @@ import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 function LoginPopup() {
 
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
+    const [email,setEmail] = useState('dhruvilparmar@gmail.com');
+    const [password,setPassword] = useState('Dhruvil@20');
     const url = import.meta.env.VITE_BACKEND_URL ;
 
     const navigate = useNavigate();
