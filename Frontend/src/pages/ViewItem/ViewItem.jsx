@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { assets } from '../../assets/assets';
-import "./ViewItem.css"
+import "./Viewitem.css"
 import FoodDisplay from '../../components/FoodDisplay/FoodDisplay';
 import FoodItem from '../../components/FoodItem/FoodItem';
 
