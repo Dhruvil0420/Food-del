@@ -1,15 +1,76 @@
 .food-display {
-    margin-top: 30px;
+    margin-top: 40px;
+    padding: 0 5%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .food-display h2 {
-    font-size: max(2vw, 24px);
+    font-size: max(2vw, 26px);
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
 }
 
 .food-display-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    margin-top: 30px;
-    gap: 30px;
-    row-gap: 50px;
+    margin-top: 36px;
+    gap: 32px;
+    row-gap: 48px;
+}
+
+.food-display-item {
+    cursor: pointer;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.food-display-item:hover {
+    transform: translateY(-8px);
+}
+
+.food-display-item:hover .food-item {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e8e8e8;
+}
+
+.food-display-item .food-item {
+    height: 100%;
+    border: 1px solid #eee;
+    background: #fff;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.food-display-item .food-item-price {
+    color: #ff6b4a;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .food-display {
+        padding: 0 3%;
+        margin-top: 28px;
+    }
+
+    .food-display-list {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+        row-gap: 32px;
+    }
+
+    .food-display-item:hover {
+        transform: translateY(-4px);
+    }
+}
+
+@media (max-width: 500px) {
+    .food-display-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        row-gap: 24px;
+    }
 }

@@ -7,11 +7,8 @@ import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 function LoginPopup() {
 
-    // const [email, setEmail] = useState('dhruvilparmar@gmail.com');
-    // const [password, setPassword] = useState('Dhruvil@20');
-
-    const email = "dhruvilparmar@gmail.com"
-    const password = "Dhruvil@20"
+    const [email, setEmail] = useState('dhruvilparmar@gmail.com');
+    const [password, setPassword] = useState('Dhruvil@20');
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -55,6 +52,7 @@ function LoginPopup() {
                         placeholder='email'
                         required
                         name='email'
+                        onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
                     <input
@@ -62,6 +60,7 @@ function LoginPopup() {
                         required
                         placeholder='password'
                         name='password'
+                        onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
                 </div>

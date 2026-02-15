@@ -3,15 +3,14 @@ import { assets } from '../../assets/assets';
 import './FoodItem.css'
 import { AppContext } from '../../context/AppContext';
 
-function FoodItem({ item }) {
+function FoodItem({ item, showCategory }) {
 
-   
     const { cartItem, addToCart, removeToCart } = useContext(AppContext);
-    
+
     return (
         <div className='food-item'>
             <div className="food-item-container">
-                <img className='food-item-container-image' src={ item.image} alt="" />
+                <img className='food-item-container-image' src={item.image} alt="" />
                 {!cartItem[item._id]
                     ? <img className="add" onClick={() => addToCart(item._id)} src={assets.add_icon_white} alt="" />
                     : <div className='food-item-counter'>
@@ -26,8 +25,15 @@ function FoodItem({ item }) {
                     <p>{item.name}</p>
                     <img src={assets.rating_starts} alt="" />
                 </div>
-                <p className='food-item-dec'>{item.description}</p>
-                <h3 className='food-item-price'>₹{item.price}</h3>
+                <p className='food-item-dec'>
+                    {showCategory ?
+                        <div className='food-category'>
+                            <li>Category</li>
+                            <h2>{item.category}</h2>
+                        </div>
+                        : item.description}
+                </p>
+                <h3 className='food-item-price'>${item.price}</h3>
             </div>
         </div>
     )

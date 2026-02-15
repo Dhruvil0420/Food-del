@@ -1,7 +1,7 @@
 import orderModel from "../models/order.models.js"
 import foodModel from '../models/food.models.js'
 import userModel from "../models/user.models.js"
-import Stripe from "stripe";
+import stripe from "../config/stripe.js"
 
 // placeOrder using Forntend
 
@@ -20,8 +20,6 @@ const placeOrder = async (req, res) => {
                 message: "Plese Select Items"
             });
         }
-
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
         let line_items = [];
         let totalAmount = 0;
@@ -42,9 +40,9 @@ const placeOrder = async (req, res) => {
             
             line_items.push({
                 price_data: {
-                    currency: "inr",
+                    currency: "usd",
                     product_data: { name: food.name },
-                    unit_amount: (food.price) * 100 * 1
+                    unit_amount: (food.price) * 100 
                 },
                 quantity: item.quantity
             });
@@ -56,9 +54,9 @@ const placeOrder = async (req, res) => {
 
         line_items.push({
             price_data: {
-                currency: "inr",
+                currency: "usd",
                 product_data: { name: "Delivery Charge" },
-                unit_amount: Delivery_Fee * 100 * 1
+                unit_amount: Delivery_Fee * 100 
             },
             quantity: 1
         });
