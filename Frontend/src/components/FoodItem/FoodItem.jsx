@@ -12,11 +12,11 @@ function FoodItem({ item, showCategory }) {
             <div className="food-item-container">
                 <img className='food-item-container-image' src={item.image} alt="" />
                 {!cartItem[item._id]
-                    ? <img className="add" onClick={() => addToCart(item._id)} src={assets.add_icon_white} alt="" />
-                    : <div className='food-item-counter'>
-                        <img onClick={() => removeToCart(item._id)} src={assets.remove_icon_red} alt="" />
+                    ? <img className="add" onClick={(e) => { e.stopPropagation(); addToCart(item._id); }} src={assets.add_icon_white} alt="" />
+                    : <div className='food-item-counter' onClick={(e) => e.stopPropagation()}>
+                        <img onClick={(e) => { e.stopPropagation(); removeToCart(item._id); }} src={assets.remove_icon_red} alt="" />
                         <p>{cartItem[item._id]}</p>
-                        <img onClick={() => addToCart(item._id)} src={assets.add_icon_green} alt="" />
+                        <img onClick={(e) => { e.stopPropagation(); addToCart(item._id); }} src={assets.add_icon_green} alt="" />
                     </div>
                 }
             </div>
