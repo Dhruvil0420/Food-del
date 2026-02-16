@@ -90,8 +90,7 @@ const placeOrder = async (req, res) => {
     }
 }
 
-// verifyUser Order By Strpe Webhokkes 
-
+// verifyUser Order By Stripe Webhooks 
 const stripeverifyOrder = async (req, res) => {
 
     const sig = req.headers["stripe-signature"];
@@ -104,39 +103,60 @@ const stripeverifyOrder = async (req, res) => {
             process.env.STRIPE_WEBHOOK_SECRET
         );
     } catch (error) {
+        console.error("Stripe webhook signature error:", error.message);
         return res.status(400).send(`Webhook Error: ${error.message}`);
     }
 
+    console.log("Stripe webhook event type:", event.type);
+
     const session = event.data.object;
 
-    switch (event.type) {
+    try {
+        switch (event.type) {
 
-        case "payment_intent.succeeded": {
+            // Successful Checkout Session payment
+            case "checkout.session.completed": {
 
-            const { orderId, userId } = session.metadata;
+                const { orderId, userId } = session.metadata || {};
 
-            await orderModel.findByIdAndUpdate(orderId, {
-                payment: true
-            });
+                if (!orderId || !userId) {
+                    console.error("Missing metadata on checkout.session.completed:", session.metadata);
+                    break;
+                }
 
-            await userModel.findByIdAndUpdate(userId, {
-                cartData: {}
-            });
+                await orderModel.findByIdAndUpdate(orderId, {
+                    payment: true
+                });
 
-            break;
+                await userModel.findByIdAndUpdate(userId, {
+                    cartData: {}
+                });
+
+                break;
+            }
+
+            // Async payment failure
+            case "checkout.session.async_payment_failed": {
+
+                const { orderId } = session.metadata || {};
+
+                if (!orderId) {
+                    console.error("Missing orderId metadata on async_payment_failed:", session.metadata);
+                    break;
+                }
+
+                await orderModel.findByIdAndDelete(orderId);
+
+                break;
+            }
+
+            default:
+                // Ignore other event types
+                break;
         }
-
-        case "payment_intent.payment_failed": {
-
-            const { orderId } = session.metadata;
-
-            await orderModel.findByIdAndDelete(orderId);
-
-            break;
-        }
-
-        default:
-            break;
+    } catch (err) {
+        console.error("Stripe webhook handler error:", err);
+        // Still return 200 so Stripe doesn't retry forever
     }
 
     res.status(200).json({ received: true });
