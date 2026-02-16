@@ -1,55 +1,39 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import './Verify.css'
-import axios from 'axios';
-import { useEffect } from 'react';
-import { toast }  from "react-hot-toast"
-import { useContext } from 'react';
-import { AppContext } from '../../context/AppContext';
+import { useEffect, useContext } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AppContext } from "../../context/AppContext";
 
-function Verify() {
+const Verify = () => {
 
-  const [searchParams, setsearchParams] = useSearchParams();
-
-  const success = searchParams.get("success");
+  const [searchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const url = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-
   const { setCartItem } = useContext(AppContext);
-  const verifyPayment = async () => {
-    try {
 
-      if (!success || !orderId) {
-      toast.error("Invalid payment response");
+  useEffect(() => {
+    if (!orderId) {
+      toast.error("Invalid order");
       navigate("/");
       return;
     }
-      const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
-      if (response.data.success) {
-        setCartItem({});
-        toast.success(response.data.message);
-        navigate("/myorders");
-      }
-      else {
-        toast.error(response.data.message);
-        navigate("/");
-      }
-    } 
-    catch (error) {
-      toast.error(error.message)
-    }
-  }
 
-  useEffect(() => {
-    verifyPayment()
-  },[])
+    // Backend (Stripe webhook) already cleared the cart in DB.
+    // Keep frontend cart in sync by clearing local state too.
+    setCartItem({});
+
+    const timer = setTimeout(() => {
+      navigate("/myorders");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+
+  }, [orderId, navigate, setCartItem]);
+
   return (
     <div className='verify'>
-      <div className="spinner">
-
-      </div>
+      <div className="spinner"></div>
     </div>
-  )
-}
+  );
+};
 
 export default Verify;

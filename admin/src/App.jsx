@@ -1,6 +1,6 @@
 import Navbar from "./componetes/Navbar/Navbar.jsx"
 import Sidebar from "./componetes/sidebar/Sidebar.jsx"
-import { Route,Routes } from "react-router-dom"
+import { Route, Routes, Navigate } from "react-router-dom"
 import AddItems from "./pages/Add-Items/AddItems.jsx"
 import ListItems from "./pages/List-Items/ListItems.jsx"
 import Orders from './pages/Orders/Orders.jsx'
@@ -33,7 +33,7 @@ function App() {
         {!isLoginPage && adminToken && <Sidebar />}
 
         <Routes>
-          <Route path="/admin/login" element={<LoginPopup />} />
+          <Route path="/admin/login" element={adminToken ? <Navigate to="/" replace /> : <LoginPopup />} />
           <Route path="/" element={<AddItems />} />
           <Route path="/add" element={<AddItems />} />
           <Route path="/list" element={<ListItems />} />

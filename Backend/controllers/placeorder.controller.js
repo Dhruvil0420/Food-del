@@ -71,9 +71,12 @@ const placeOrder = async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             line_items,
             mode: "payment",
-            metadata: { orderId: order._id.toString() },
-            success_url: `${url}/verify?success=true&orderId=${order._id}`,
-            cancel_url: `${url}/verify?success=false&orderId=${order._id}`
+            metadata: { 
+                orderId: order._id.toString(),
+                userId : userId.toString()
+            },
+            success_url: `${url}/verify?orderId=${order._id}`,
+            cancel_url: `${url}/cart`
         });
 
         res.json({ success: true, session_url: session.url });
@@ -87,47 +90,58 @@ const placeOrder = async (req, res) => {
     }
 }
 
-// verifyUser Order 
+// verifyUser Order By Strpe Webhokkes 
 
-const verifyOrder = async (req, res) => {
-    const { orderId, success } = req.body
+const stripeverifyOrder = async (req, res) => {
+
+    const sig = req.headers["stripe-signature"];
+    let event;
 
     try {
+        event = stripe.webhooks.constructEvent(
+            req.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (error) {
+        return res.status(400).send(`Webhook Error: ${error.message}`);
+    }
 
-        const order = await orderModel.findById(orderId);
+    const session = event.data.object;
 
-        if (!order)
-            return res.status(404).json({
-                success: false,
-                message: "Order not found"
+    switch (event.type) {
+
+        case "payment_intent.succeeded": {
+
+            const { orderId, userId } = session.metadata;
+
+            await orderModel.findByIdAndUpdate(orderId, {
+                payment: true
             });
 
-        if (success == "true") {
-            order.payment = true;
-            await order.save();
-
-            await userModel.findByIdAndUpdate(order.userId, { cartData: {} });
-
-            res.status(200).json({
-                success: true,
-                message: "Paid"
+            await userModel.findByIdAndUpdate(userId, {
+                cartData: {}
             });
+
+            break;
         }
-        else {
+
+        case "payment_intent.payment_failed": {
+
+            const { orderId } = session.metadata;
+
             await orderModel.findByIdAndDelete(orderId);
-            res.json({
-                success: true,
-                message: "Payment Failed"
-            })
+
+            break;
         }
+
+        default:
+            break;
     }
-    catch (error) {
-        res.status(200).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+
+    res.status(200).json({ received: true });
+};
+
 
 // Get User orders
 
@@ -216,4 +230,4 @@ const updateStatus = async (req, res) => {
     }
 
 }
-export { placeOrder, verifyOrder, userOrders, listOrder, updateStatus }
+export { placeOrder, stripeverifyOrder, userOrders, listOrder, updateStatus }
