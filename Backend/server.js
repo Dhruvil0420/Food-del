@@ -12,7 +12,7 @@ import { stripeverifyOrder } from './controllers/placeorder.controller.js';
 
 // app config
 const app = express()
-const port = 5000 || process.env.PORT;
+const port =  process.env.PORT || 5000;
 
 // db connection
 

@@ -106,8 +106,10 @@ const stripeverifyOrder = async (req, res) => {
         console.error("Stripe webhook signature error:", error.message);
         return res.status(400).send(`Webhook Error: ${error.message}`);
     }
+    
+    console.log("Webhook route hit");
+    console.log("Event type:", event.type);
 
-    console.log("Stripe webhook event type:", event.type);
 
     const session = event.data.object;
 
