@@ -36,7 +36,7 @@ const AppContextProvider = (props) => {
                 }
             );
             if(respones.data.success){
-                toast.success(respones.data.message);
+                toast.success(respones.data.cartData);
             }
             else{
                 toast.error(respones.data.message);
@@ -80,7 +80,6 @@ const AppContextProvider = (props) => {
     const fetchFoodList = async () => {
         try {
             const response = await axios.get(`${url}/api/food/list`);
-            setLoading(true);
             if (response.data.success) {
                 setfoodList(response.data.data);
             }
@@ -90,9 +89,6 @@ const AppContextProvider = (props) => {
         } 
         catch (error) {
             toast.error(error.message);
-        }
-        finally{
-            setLoading(false);
         }
     }
 

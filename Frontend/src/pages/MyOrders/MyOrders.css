@@ -1,7 +1,7 @@
 .my-orders{
     margin: 50px 0px;
 }
-.my-orders .container{
+.my-orders .order-container{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -41,13 +41,25 @@
     cursor: pointer;
 }
 
+.my-order-loading{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width:900px) {
     .my-orders-order{
-        grid-template-columns: 1fr 2fr 1fr;
-        row-gap: 5px;
-        font-size: 12px;
+        grid-template-columns: 40px 1fr;
+        row-gap: 8px;
+        column-gap: 10px;
     }
+
+    .my-orders-order img{
+        grid-row: span 4;
+    }
+
     .my-orders-order button{
-        font-size: 10px;
+        grid-column: span 2;
+        padding: 8px;
     }
 }

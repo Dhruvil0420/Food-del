@@ -3,22 +3,32 @@ import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext';
 import { assets } from '../../assets/assets';
 import "./MyOrders.css"
+import toast from 'react-hot-toast';
+import Loading from '../../components/Loading/Loading';
 
 function MyOrders() {
 
     const url = import.meta.env.VITE_BACKEND_URL;
-    const { token } = useContext(AppContext);
+    const { token ,loading, setLoading } = useContext(AppContext);
     const [data, setData] = useState([]);
 
     const fetchorders = async () => {
-
-        const response = await axios.get(`${url}/api/order/getorders`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        setLoading(true);
+       try {
+            const response = await axios.get(`${url}/api/order/getorders`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
-        }
-        );
-        setData(response.data.data);
+            );
+            setData(response.data.data);
+        } 
+       catch (error) {
+        toast.error(error.message);
+       }
+       finally{
+        setLoading(false);
+       }
     }
 
     useEffect(() => {
@@ -27,10 +37,11 @@ function MyOrders() {
         }
     }, [token])
 
+    if(loading) return <div className='my-order-loading'><Loading/></div>
     return (
         <div className='my-orders'>
             <h2>My Orders</h2>
-            <div className="container">
+            <div className="order-container">
                 {data.map((order, index) => (
                     <div key={index} className="my-orders-order">
                         <img src={assets.parcel_icon} alt="" />
