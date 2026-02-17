@@ -36,7 +36,7 @@ const AppContextProvider = (props) => {
                 }
             );
             if(respones.data.success){
-                toast.success(respones.data.cartData);
+                toast.success(respones.data.message);
             }
             else{
                 toast.error(respones.data.message);

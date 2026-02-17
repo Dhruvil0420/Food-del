@@ -10,7 +10,6 @@ function Cart() {
   const deliveryFee = subtotal > 0 ? 2 : 0;
   const total = deliveryFee + subtotal; 
 
-  const url = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
 

@@ -164,6 +164,12 @@
     box-shadow: 0 4px 16px rgba(45, 138, 94, 0.35);
 }
 
+.view-item-loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Related Section */
 .related-section {
     margin-top: 72px;

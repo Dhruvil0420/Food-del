@@ -12,7 +12,7 @@ function ViewItem({ setShowLogin }) {
     const { id } = useParams();
     const url = import.meta.env.VITE_BACKEND_URL;
     const navigate = useNavigate();
-    
+
     const { food_list, addToCart, token, loading, setLoading } = useContext(AppContext);
     const [relatedItems, setrelatedItems] = useState([]);
     const [item, setItem] = useState([]);
@@ -65,7 +65,7 @@ function ViewItem({ setShowLogin }) {
 
 
     if (loading) {
-        return <Loading />
+        return <div className='view-item-loading'><Loading /></div>
     }
 
     return (
