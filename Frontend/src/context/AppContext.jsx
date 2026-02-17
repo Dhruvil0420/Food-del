@@ -12,6 +12,7 @@ const AppContextProvider = (props) => {
     const [token, setToken] = useState("");
 
     const [food_list, setfoodList] = useState([]);
+    const [loading,setLoading] = useState(false);
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -77,12 +78,21 @@ const AppContextProvider = (props) => {
 
     
     const fetchFoodList = async () => {
-        const response = await axios.get(`${url}/api/food/list`);
-        if (response.data.success) {
-            setfoodList(response.data.data);
+        try {
+            const response = await axios.get(`${url}/api/food/list`);
+            setLoading(true);
+            if (response.data.success) {
+                setfoodList(response.data.data);
+            }
+            else {
+                toast.error(response.data.message);
+            }
+        } 
+        catch (error) {
+            toast.error(error.message);
         }
-        else {
-            toast.error(response.data.message);
+        finally{
+            setLoading(false);
         }
     }
 
@@ -141,7 +151,8 @@ const AppContextProvider = (props) => {
         removeToCart,
         getTotalPrice,
         token, setToken,
-        cartCount
+        cartCount,
+        loading,setLoading
     }
     return (
         <AppContext.Provider value={contextValue}>

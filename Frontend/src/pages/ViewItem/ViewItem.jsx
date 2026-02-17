@@ -3,21 +3,49 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { assets } from '../../assets/assets';
 import "./Viewitem.css"
-import FoodDisplay from '../../components/FoodDisplay/FoodDisplay';
 import FoodItem from '../../components/FoodItem/FoodItem';
-
+import { url } from '../../../../admin/src/assets/assets';
+import toast from 'react-hot-toast';
+import axios from "axios"
+import Loading from '../../components/Loading/Loading';
 function ViewItem({ setShowLogin }) {
     const { id } = useParams();
+    const url = import.meta.env.VITE_BACKEND_URL;
     const navigate = useNavigate();
-    const { food_list, addToCart, token } = useContext(AppContext);
+    
+    const { food_list, addToCart, token, loading, setLoading } = useContext(AppContext);
     const [relatedItems, setrelatedItems] = useState([]);
+    const [item, setItem] = useState([]);
 
-    const item = food_list.find(food => food._id === id);
+
+    useEffect(() => {
+        const fetchFood = async () => {
+            try {
+                setLoading(true);
+
+                const response = await axios.get(
+                    `${url}/api/food/get/${id}`
+                );
+
+                if (response.data.success) {
+                    setItem(response.data.data);
+                }
+
+            } catch (error) {
+                toast.error(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFood();
+        window.scrollTo(0, 0);
+
+    }, [id]);
 
     useEffect(() => {
 
         if (!item) return;
-
         const filtered = food_list
             .filter(food => food.category === item.category)
             .slice(0, 5);
@@ -36,7 +64,9 @@ function ViewItem({ setShowLogin }) {
     };
 
 
-    if (!item) return <div className="product-page loading"><p className="loading-placeholder">Loading...</p></div>;
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <div className="product-page">
@@ -93,7 +123,7 @@ function ViewItem({ setShowLogin }) {
                             className="related-card"
                             onClick={() => navigate(`/viewitem/${food._id}`)}
                         >
-                        <FoodItem item={food} showCategory />
+                            <FoodItem item={food} showCategory />
                         </div>
                     ))}
                 </div>

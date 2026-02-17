@@ -144,10 +144,12 @@
 .nav-profile-dropdown {
     position: absolute;
     top: 120%;
-    right: 0%;
-    z-index: 1000;
-    display: none;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s ease;
 }
+
 
 .navbar-profile:hover .nav-profile-dropdown {
     display: flex;

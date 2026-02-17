@@ -1,5 +1,5 @@
 import foodModel from '../models/food.models.js'
-import {v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 
 // add food item 
@@ -80,8 +80,8 @@ const listFood = async (req, res) => {
 
 const removeFood = async (req, res) => {
 
-    const {id} = req.body;
-    
+    const { id } = req.body;
+
     try {
         const fooditem = await foodModel.findById(id);
         if (!fooditem) {
@@ -111,4 +111,34 @@ const removeFood = async (req, res) => {
     }
 }
 
-export { addFood, listFood, removeFood };
+//Get One Food Item Only
+
+const getFoodById = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+
+        const food = await foodModel.findById(id);
+
+        if (!food) {
+            return res.json({
+                success: false,
+                message: "Food Not Found"
+            });
+        }
+
+        return res.json({
+            success: true,
+            data: food
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+    }
+};
+
+
+export { addFood, listFood, getFoodById, removeFood };

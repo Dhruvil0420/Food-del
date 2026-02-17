@@ -17,6 +17,7 @@ function Orders() {
 
     const fetchAlluserorders = async() => {
        try {
+        setLoading(true);
             const response = await axios(`${url}/api/order/list`);
             if(response.data.success){
                 setOrder(response.data.data);
