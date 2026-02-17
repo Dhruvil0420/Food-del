@@ -24,7 +24,6 @@ function ListItems() {
             });
 
             if (respones.data.success) {
-                console.log(respones.data)
                 setList(respones.data.data);
             }
             else {
