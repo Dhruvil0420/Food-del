@@ -2,10 +2,13 @@ import { assets } from '../../assets/assets.js';
 import './Navbar.css'
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
   function Navbar() {
 
     const { handleLogout ,adminToken } = useContext(AppContext);
+
+    const navigate = useNavigate();
 
     return (
       <div className="navbar">
@@ -18,11 +21,14 @@ import { AppContext } from '../../context/AppContext.jsx';
             alt="Admin profile"
           />
 
-          {adminToken && (
+          {adminToken ? (
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
-          )}
+          ) : 
+          (
+            <button className='logout-btn' onClick={() => navigate("/admin/login")}>Login</button>
+          )} 
         </div>
       </div>
     );

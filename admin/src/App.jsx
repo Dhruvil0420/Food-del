@@ -22,7 +22,7 @@ function App() {
       <Toaster/>
 
       {/* Hide layout on login page */}
-      {!isLoginPage && adminToken && (
+      {!isLoginPage && (
         <>
           <hr />
           <Navbar />
@@ -30,7 +30,7 @@ function App() {
       )}
 
       <div className="app-content">
-        {!isLoginPage && adminToken && <Sidebar />}
+        {!isLoginPage && <Sidebar />}
 
         <Routes>
           <Route path="/admin/login" element={adminToken ? <Navigate to="/" replace /> : <LoginPopup />} />

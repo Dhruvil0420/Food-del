@@ -5,7 +5,7 @@ const adminMiddleware = (req, res, next) => {
 
         const {token} = req.headers;
         if (!token) {
-            return res.status(401).json({
+            return res.json({
                 success: false,
                 message: "Unauthorized"
             });

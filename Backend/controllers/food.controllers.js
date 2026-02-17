@@ -52,6 +52,7 @@ const addFood = async (req, res) => {
 
 const listFood = async (req, res) => {
     try {
+
         const food = await foodModel.find({});
 
         if (food.length === 0) {
@@ -68,7 +69,7 @@ const listFood = async (req, res) => {
         })
     }
     catch (error) {
-        res.status(500).json({
+        res.json({
             success: false,
             message: error.message
         })

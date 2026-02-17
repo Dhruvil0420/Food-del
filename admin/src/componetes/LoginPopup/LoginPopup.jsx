@@ -5,10 +5,15 @@ import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { toast } from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../../assets/assets';
 function LoginPopup() {
 
     const [email, setEmail] = useState('dhruvilparmar@gmail.com');
     const [password, setPassword] = useState('Dhruvil@20');
+
+    const goToFrotend = () => {
+        window.location.href = import.meta.env.VITE_FROTEND_URL;
+    };
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -45,6 +50,7 @@ function LoginPopup() {
             <form onSubmit={onLogin} className='login-popup-container'>
                 <div className="login-popup-title">
                     <h2>Admin Login</h2>
+                    <img onClick={() => goToFrotend()} src={assets.cross_icon} />
                 </div>
                 <div className="login-popup-inputs">
                     <input

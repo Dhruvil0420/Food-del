@@ -9,19 +9,22 @@ import { AppContext } from '../../context/AppContext.jsx';
 function ListItems() {
 
     const [list, setList] = useState([]);
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(false);
 
     const url = import.meta.env.VITE_BACKEND_URL;
 
     const {adminToken} = useContext(AppContext);
     
     const ListItem = async () => {
+
+        setLoading(true);
         try {
-            const respones = await axios.get(`${url}/api/admin/list`,{
+            const respones = await axios.get(`${url}/api/food/list`,{
                 headers: {token: adminToken}
             });
 
             if (respones.data.success) {
+                console.log(respones.data)
                 setList(respones.data.data);
             }
             else {
@@ -60,9 +63,7 @@ function ListItems() {
     }
 
     useEffect(() => {
-        if(adminToken) {
-            ListItem();
-        }
+        ListItem();
     }, [adminToken])
 
     if(loading) return <Loading/>
