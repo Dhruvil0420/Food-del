@@ -165,4 +165,5 @@ npm run dev
 **Dhruvil Parmar**
 
 📧 dhruvilparmar1819@gmail.com
+
 🔗 https://www.linkedin.com/in/your-linkedin-username/
