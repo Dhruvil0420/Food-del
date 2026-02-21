@@ -5,7 +5,7 @@ Food Delivery is a full-stack web application built using the MERN stack. It all
 ---
 
 ## 🚀 Live Demo
-🔗 https://food-del-frontend-ten.vercel.app/
+🔗 https://food-del-frontend-ten.vercel.app
 
 ---
 
@@ -35,7 +35,7 @@ Food Delivery is a full-stack web application built using the MERN stack. It all
 
 **Frontend (User + Admin):**
 - React.js  
-- Tailwind CSS  
+- CSS  
 - Axios  
 - React Router  
 - React Hot Toast  
@@ -49,7 +49,6 @@ Food Delivery is a full-stack web application built using the MERN stack. It all
 - JWT (JSON Web Tokens)  
 - bcryptjs (Password Hashing)  
 - validator  
-- HTTP-only cookies  
 
 **File Upload & Storage:**
 - Multer (File Upload Handling)  
@@ -115,17 +114,22 @@ npm install
 #### backend/.env
 ```bash
 MONGODB_URI=your_mongodb_connection
+# ➤ Replace with your MongoDB connection string
 
 JWT_SECRET=your_secret_key
+# ➤ Replace with a securely generated secret key for JWT authentication
 
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+# ➤ Replace with your Cloudinary credentials for image upload and storage
 
 # Stripe
 STRIPE_SECRET_KEY=your_stripe_secret
 STRIPE_WEBHOOK_SECRET=your_webhook_secret
+# ➤ Replace with your Stripe keys for handling payments
+
 ```
 #### frontend/.env
 ```bash
