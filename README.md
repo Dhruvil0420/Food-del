@@ -62,25 +62,28 @@ Food Delivery is a full-stack web application built using the MERN stack. It all
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](./screenshots/Home.png)
+![Home](./screenshots/home.png)
 
-###    Menu Page
-![Menu](./screenshots/Menu.png)
+### 📋 Menu Page
+![Menu](./screenshots/menu.png)
 
 ### 🍔 Food Listing
-![Food](./screenshots/FoodList.png)
+![Food](./screenshots/foodlist.png)
 
 ### 🛒 Cart Page
 ![Cart](./screenshots/cart.png)
 
+### 🏠 Add Address Page
+![Add Address](./screenshots/addaddress.png)
+
 ### 📦 Orders Page
-![Orders](./screenshots/Myorders.png)
+![Orders](./screenshots/myorders.png)
 
 ### 💳 Stripe Payment
-![Payment](./screenshots/Stripe.png)
+![Payment](./screenshots/stripe.png)
 
 ### 🔐 Admin Panel
-![Admin](./screenshots/AddItem.png)
+![Admin](./screenshots/additem.png)
 
 ---
 
