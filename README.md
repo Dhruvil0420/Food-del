@@ -145,8 +145,8 @@ FRONTEND_URL = "http://localhost:5173"
 #### frontend/.env
 
 ```bash
-VITE_BACKEND_URL = http://localhost:5000
-VITE_ADMIN_URL = http://localhost:5174
+VITE_BACKEND_URL = "http://localhost:5000"
+VITE_ADMIN_URL = "http://localhost:5174"
 ```
 ### admin/.env
 
