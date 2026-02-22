@@ -62,22 +62,25 @@ Food Delivery is a full-stack web application built using the MERN stack. It all
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](./screenshots/home.png)
+![Home](./screenshots/Home.png)
+
+###    Menu Page
+![Menu](./screenshots/Menu.png)
 
 ### 🍔 Food Listing
-![Food](./screenshots/food.png)
+![Food](./screenshots/FoodList.png)
 
 ### 🛒 Cart Page
 ![Cart](./screenshots/cart.png)
 
 ### 📦 Orders Page
-![Orders](./screenshots/orders.png)
+![Orders](./screenshots/Myorders.png)
 
 ### 💳 Stripe Payment
-![Payment](./screenshots/stripe.png)
+![Payment](./screenshots/Stripe.png)
 
 ### 🔐 Admin Panel
-![Admin](./screenshots/admin.png)
+![Admin](./screenshots/AddItem.png)
 
 ---
 
@@ -87,8 +90,8 @@ Follow the steps below to set up the project locally:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/Food_delivery.git
-cd Food_delivery
+git clone https://github.com/Dhruvil0420/Food-del.git
+cd Food-Del
 ```
 
 ### 2. Install backend dependencies
@@ -112,7 +115,10 @@ npm install
 ### 5. Create environment files
 
 #### backend/.env
+
 ```bash
+PORT = 5000
+
 MONGODB_URI=your_mongodb_connection
 # ➤ Replace with your MongoDB connection string
 
@@ -130,18 +136,23 @@ STRIPE_SECRET_KEY=your_stripe_secret
 STRIPE_WEBHOOK_SECRET=your_webhook_secret
 # ➤ Replace with your Stripe keys for handling payments
 
+FRONTEND_URL = "http://localhost:5173"
+
 ```
 #### frontend/.env
+
 ```bash
 VITE_BACKEND_URL = http://localhost:5000
 VITE_ADMIN_URL = http://localhost:5174
 ```
 ### admin/.env
+
 ```bash
 VITE_BACKEND_URL = "http://localhost:5000"
 VITE_FROTEND_URL = "http://localhost:5173"
 ```
 ### 6.  Run the application
+
 ####  Start the frontend
 ```bash
 cd frontend
@@ -166,4 +177,4 @@ npm run dev
 
 📧 dhruvilparmar1819@gmail.com
 
-🔗 https://www.linkedin.com/in/your-linkedin-username/
+🔗 https://www.linkedin.com/in/dhruvil-parmar-964b80346
