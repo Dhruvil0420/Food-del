@@ -170,10 +170,21 @@ const stripeverifyOrder = async (req, res) => {
 const userOrders = async (req, res) => {
     try {
         const userId = req.userId;
-        const orders = await orderModel.find({ userId }).populate("userId", "name email").populate({
+        let orders = await orderModel.find({ userId }).populate("userId", "name email").populate({
             path: "items.foodId",
             select: "name price image category"
-        }).exec()
+        }).exec();
+
+        // Automatically clean up any orders containing deleted food items (null foodId)
+        const orphanedOrderIds = orders
+            .filter(order => order.items.some(item => !item.foodId))
+            .map(order => order._id);
+
+        if (orphanedOrderIds.length > 0) {
+            await orderModel.deleteMany({ _id: { $in: orphanedOrderIds } });
+            orders = orders.filter(order => !orphanedOrderIds.includes(order._id));
+        }
+
         res.json({
             success: true,
             data: orders
@@ -192,11 +203,22 @@ const userOrders = async (req, res) => {
 const listOrder = async (req, res) => {
 
     try {
-        const orders = await orderModel.find({}).populate("userId", "name email").populate(
+        let orders = await orderModel.find({}).populate("userId", "name email").populate(
             {
                 path: "items.foodId",
                 select: "name price category image "
             }).exec();
+
+        // Automatically clean up any orders containing deleted food items (null foodId)
+        const orphanedOrderIds = orders
+            .filter(order => order.items.some(item => !item.foodId))
+            .map(order => order._id);
+
+        if (orphanedOrderIds.length > 0) {
+            await orderModel.deleteMany({ _id: { $in: orphanedOrderIds } });
+            orders = orders.filter(order => !orphanedOrderIds.includes(order._id));
+        }
+
         res.json({
             success: true,
             data: orders

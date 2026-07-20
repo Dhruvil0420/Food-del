@@ -64,7 +64,7 @@ function Orders() {
                             <p className='order-item-food'>
                                 {order.items.map((item,index) => (
                                     <span key={index}>
-                                        {item.foodId.name }
+                                        {item.foodId?.name || "Item Removed"}
                                         {order.items.length -1 !== index &&  " , "}
                                     </span>
                                 ))}

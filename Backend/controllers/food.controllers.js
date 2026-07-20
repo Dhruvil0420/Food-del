@@ -1,4 +1,6 @@
 import foodModel from '../models/food.models.js'
+import orderModel from '../models/order.models.js'
+import userModel from '../models/user.models.js'
 import { v2 as cloudinary } from "cloudinary";
 
 
@@ -86,21 +88,28 @@ const removeFood = async (req, res) => {
         const fooditem = await foodModel.findById(id);
         if (!fooditem) {
             return res.status(404).json({
-                success: true,
+                success: false,
                 message: "Food Not Found"
             })
         }
 
         const url = fooditem.image;
-        const publicId = url.split("/").pop().split(".")[0];
+        if (url) {
+            const publicId = url.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy(publicId);
+        }
 
-        await cloudinary.uploader.destroy(publicId);
+        await foodModel.findByIdAndDelete(id);
 
-        await foodModel.findByIdAndDelete(req.body.id);
+        // Delete all orders associated with this deleted food item
+        await orderModel.deleteMany({ "items.foodId": id });
+
+        // Remove item from all users' carts
+        await userModel.updateMany({}, { $unset: { [`cartData.${id}`]: "" } });
 
         res.status(200).json({
             success: true,
-            message: "Food Removed"
+            message: "Food Removed and related orders cleaned up"
         })
     }
     catch (error) {

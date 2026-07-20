@@ -47,7 +47,7 @@ function MyOrders() {
                         <img src={assets.parcel_icon} alt="" />
                         <p>{order.items.map((item, index) => (
                             <span key={index}>
-                                {item.foodId.name} X {item.quantity}
+                                {item.foodId?.name || "Item Removed"} X {item.quantity}
                                 {order.items.length - 1 !== index && " , "}
                             </span>
                         ))}</p>

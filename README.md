@@ -139,7 +139,6 @@ STRIPE_SECRET_KEY=your_stripe_secret
 STRIPE_WEBHOOK_SECRET=your_webhook_secret
 # ➤ Replace with your Stripe keys for handling payments
 
-FRONTEND_URL = "http://localhost:5173"
 
 ```
 #### frontend/.env
